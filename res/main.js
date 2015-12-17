@@ -8,6 +8,7 @@
 
 /* Executed when DOM is ready */
 $(function () {
+    Logger.info("Powered by crealytics GmbH");
     Logger.info("Internal Startup... ");
     // initialize the Editor
     theEditor.init(function () {
