@@ -1,0 +1,528 @@
+/* CSS Reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* CSS Code */
+body, html {
+  background-color: #26343F;
+}
+
+div#force-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100000;
+  display: none;
+}
+
+div#overlay-panel {
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  margin-top: -150px;
+  margin-left: -250px;
+  background-color: #26343F;
+  border: 1px solid #202020;
+}
+
+div#overlay-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid #202020;
+  text-align: center;
+  vertical-align: baseline;
+  line-height: 25px;
+  font-family: "HelveticaNeue","Helvetica Neue","HelveticaNeueRoman","HelveticaNeue-Roman","Helvetica Neue Roman","Helvetica","Tahoma","Geneva","Arial",sans-serif;
+  font-size: 9pt;
+  color: #CCCCCC;
+}
+
+div#overlay-body {
+  position: absolute;
+  top: 26px;
+  left: 0;
+  height: -moz-calc(100% - 27px);
+  height: -webkit-calc(100% - 27px);
+  height: calc(100% - 27px);
+  width: 100%;
+  border-top: 1px solid #303030;
+}
+
+div#overlay-templates {
+  display: none;
+}
+
+table.overlay-error-container {
+  width: 90%;
+  height: 90%;
+  margin: 5%;
+  text-align: center;
+  vertical-align: baseline;
+  font-family: "HelveticaNeue","Helvetica Neue","HelveticaNeueRoman","HelveticaNeue-Roman","Helvetica Neue Roman","Helvetica","Tahoma","Geneva","Arial",sans-serif;
+  font-size: 9pt;
+  color: #CCCCCC;
+}
+
+table.overlay-error-container td {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+textarea.overlay-error-text {
+  width: 90%;
+  height: 120px;
+}
+
+div#content {
+  position: absolute;
+  bottom: 10px;
+  left: 25px;
+  margin: 0;
+  padding: 0;
+  width: -moz-calc(100% - 50px);
+  width: -webkit-calc(100% - 50px);
+  width: calc(100% - 50px);
+  height: -moz-calc(100% - 10px);
+  height: -webkit-calc(100% - 10px);
+  height: calc(100% - 10px);
+}
+
+div#menucontainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  -webkit-align-items: center;
+  align-items: center;
+  color: #FFFFFF;
+}
+
+div.menuitem {
+  padding: 3px 5px;
+  font-family: "HelveticaNeue","Helvetica Neue","HelveticaNeueRoman","HelveticaNeue-Roman","Helvetica Neue Roman","Helvetica","Tahoma","Geneva","Arial",sans-serif;
+  line-height: 12px;
+  font-size: 9pt;
+}
+
+button.menubutton {
+  border: 1px solid transparent;
+  background-color: #26343F;
+  text-align: center;
+  vertical-align: baseline;
+  display: inline-block;
+  padding: 4px 6px;
+  border-radius: 1px;
+  margin: 0;
+  color: #FFFFFF;
+}
+
+button.menubutton:hover {
+  background-color: #A5B5BC;
+  border: 1px solid #BBBBBB;
+}
+
+button.menubutton:focus {
+  background-color: #FFFFFF;
+  border: 1px solid #BBBBBB;
+  border-bottom: 1px solid transparent;
+  color: #3B4B54;
+}
+
+ul.submenu {
+  list-style: none;
+  display: none;
+  position: absolute;
+  padding: 10px;
+  background-color: #FFFFFF;
+  color: #3B4B54;
+  border: 1px solid #BBBBBB;
+  border-top: 1px solid transparent;
+  border-radius: 1px;
+  z-index: 10001;
+}
+
+button.menubutton:focus + ul.submenu {
+  display: block;
+}
+
+div.submenulink {
+  cursor: pointer;
+  background-color: #FFFFFF;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  -webkit-align-items: center;
+  -ms-flex-pack:justify;
+  justify-content: space-between;
+}
+
+div.submenulink:hover {
+  background-color: rgba(27, 177, 153, 0.2);
+}
+
+span.submenuname {
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-right: 20px;
+  height: 16px;
+  vertical-align: middle;
+  text-align: left;
+}
+
+span.submenukey {
+  padding-right: 5px;
+  padding-top: 5px;
+  padding-left: 20px;
+  height: 16px;
+  vertical-align: middle;
+  text-align: right;
+}
+
+li.separator {
+  width: 100%;
+  border-bottom: 1px solid #DDDDDD;
+  height: 5px;
+  margin-bottom: 5px;
+}
+
+span.root {
+  font-weight: 900;
+  cursor: default;
+}
+
+span.leaf {
+  text-indent: 15px;
+}
+
+div#subcontent {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: -moz-calc(100% - 50px);
+  height: -webkit-calc(100% - 50px);
+  height: calc(100% - 50px);
+}
+
+div#topcontent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+div#topcontent_wrapper {
+  bottom: 20%;
+  margin-bottom: 3px;
+}
+
+div#project_explorer_base {
+  right: 80%;
+  margin-right: 3px;
+  border-top: 3px solid rgba(0,0,0,0.1);
+  border-left: 3px solid rgba(0,0,0,0.1);  
+}
+
+div#v_resizer {
+  width: 3px;
+  right: 80%;
+  background-color: rgba(0,0,0,0.1);
+}
+
+div#h_resizer {
+  height: 3px;
+  bottom: 20%;
+  background-color: rgba(0,0,0,0.1);
+}
+
+div#editor_base {
+  width: 80%;
+  border-top: 3px solid rgba(0,0,0,0.1);
+  border-right: 3px solid rgba(0,0,0,0.1);
+}
+
+div#console_base {
+  height: 20%;
+  width: -moz-calc(100% - 6px);
+  width: -webkit-calc(100% - 6px);
+  width: calc(100% - 6px);
+  border-left: 3px solid rgba(0,0,0,0.1);
+  border-right: 3px solid rgba(0,0,0,0.1);
+  border-bottom: 3px solid rgba(0,0,0,0.1);
+}
+
+div#editor_frame {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #253B46;
+}
+
+div#console_frame {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: -moz-calc(100% - 3px);
+  height: -webkit-calc(100% - 3px);
+  height: calc(100% - 3px);
+  background-color: #253B46;
+}
+
+div#console_pad {
+  position: absolute;
+  left: 15px;
+  top: 5px;
+  width: -moz-calc(100% - 20px);
+  width: -webkit-calc(100% - 20px);
+  width: calc(100% - 20px);
+  height: -moz-calc(100% - 10px);
+  height: -webkit-calc(100% - 10px);
+  height: calc(100% - 10px);
+  overflow: auto;  
+}
+
+div#console_lines {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  -ms-flex-pack:justify;
+}
+
+div#console_lines > div {
+  margin-top: 5px;
+  font-family: "HelveticaNeue","Helvetica Neue","HelveticaNeueRoman","HelveticaNeue-Roman","Helvetica Neue Roman","Helvetica","Tahoma","Geneva","Arial",sans-serif;
+  line-height: 12px;
+  font-size: 9pt;
+  color: #FFFFFF;
+  text-align: left;
+}
+
+div#editor_file_tabs {
+  position: absolute;
+  top: 0;
+  left: 3px;
+  width: -moz-calc(100% - 3px);
+  width: -webkit-calc(100% - 3px);
+  width: calc(100% - 3px);
+  height: 35px;
+  background-color: #3B4B54;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  -webkit-align-items: center;
+  -ms-flex-pack: center; 
+}
+
+div#editor_file_tabs > div {
+  color: #FFFFFF;
+  font-family: "HelveticaNeue","Helvetica Neue","HelveticaNeueRoman","HelveticaNeue-Roman","Helvetica Neue Roman","Helvetica","Tahoma","Geneva","Arial",sans-serif;
+  line-height: 15px;
+  font-size: 9pt;
+  text-align: center;
+  vertical-align: baseline;
+  display: inline-block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 20px;
+  border: 5px solid transparent;
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+div#editor_file_tabs > div.active_tab {
+  background-color: rgba(27, 177, 153, 0.5);
+}
+
+div#editor_container {
+  position: absolute;
+  top: 35px;
+  left: 3px;
+  width: -moz-calc(100% - 3px);
+  width: -webkit-calc(100% - 3px);
+  width: calc(100% - 3px);
+  height: -moz-calc(100% - 35px);
+  height: -webkit-calc(100% - 35px);
+  height: calc(100% - 35px);
+}
+
+pre#editor {
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 8px;
+  position: absolute;
+}
+
+div#editor_contextmenu {
+  display: none;
+  font-family: "HelveticaNeue","Helvetica Neue","HelveticaNeueRoman","HelveticaNeue-Roman","Helvetica Neue Roman","Helvetica","Tahoma","Geneva","Arial",sans-serif;
+  line-height: 12px;
+  font-size: 9pt;
+  white-space: nowrap;
+}
+
+div#editor_contextmenu ul.submenu {
+  display: block;
+}
+
+div#project_explorer_frame {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #3B4B54;
+  font-family: "HelveticaNeue","Helvetica Neue","HelveticaNeueRoman","HelveticaNeue-Roman","Helvetica Neue Roman","Helvetica","Tahoma","Geneva","Arial",sans-serif;
+  line-height: 12px;
+  font-size: 9pt;
+  color: #FFFFFF;
+}
+
+div#project_explorer_header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  line-height: 35px;
+  height: 35px;
+  text-indent: 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+div#project_explorer_body {
+  position: absolute;
+  left: 0;
+  top: 36px;
+  height: -moz-calc(100% - 37px);
+  height: -webkit-calc(100% - 37px);
+  height: calc(100% - 37px);
+  width: 100%;
+  border-top: 1px solid rgba(0,0,0,0.3);
+}
+
+div#gist_list_container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+div#gist_list {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  -webkit-align-items: center;
+  -ms-flex-pack:justify;
+}
+
+div.gist {
+  margin-top: 5px;
+  margin-left: 20px;
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 20px;
+  margin-right: 20px;
+  text-align: center;
+  padding: 8px;
+  width: -moz-calc(100% - 40px);
+  width: -webkit-calc(100% - 40px);
+  width: calc(100% - 40px);
+}
+
+div.gist:first-child {
+  margin-top: 15px;
+}
+div.gist:last-child {
+  margin-bottom: 15px;
+}
+
+div.active-gist {
+  background-color: rgba(27, 177, 153, 0.5);
+}

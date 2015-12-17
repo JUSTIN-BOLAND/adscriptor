@@ -1,0 +1,502 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Adwords Script Editor -->
+    <!-- Copyright (c) 2015 Sven Fisch, crealytics GmbH All Rights Reserved. -->
+    <meta charset="UTF-8">
+    <title>Google AdWords Script Editor</title>
+    <!-- Libs -->
+    <script src="acetern/ace.js"></script>
+    <script src="res/lib/jquery-2.1.4.min.js"></script>
+    <script src="res/lib/split-pane.min.js"></script>
+    <link rel="stylesheet" href="res/lib/split-pane.css" />
+    <script src="res/lib/context-menu.min.js"></script>
+    <script src="res/lib/jszip.min.js"></script>
+    <script src="res/lib/filesaver.min.js"></script>
+    <!-- Scripts -->
+    <script src="res/logger.js"></script>
+    <script src="res/store.js"></script>
+    <script src="res/startup_creator.js"></script>
+    <script src="res/overlay.js"></script>
+    <script src="res/editor.js"></script>
+    <script src="res/gisty.js"></script>
+    <script src="res/main.js"></script>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="res/main.css" />
+</head>
+<body>
+    <!-- Lots of HTML because we can -->
+    <div id="force-overlay">
+        <!-- Popup Overlay -->
+        <div id="overlay-panel">
+            <div id="overlay-header">Sample Header Line</div>
+            <div id="overlay-body">
+            </div>
+            <!-- Overlay Templates -->
+            <div id="overlay-templates">
+                <div class="overlay-error-desc">
+                    <table class="overlay-error-container">
+                        <tr><td><p class="overlay-error-desc"></p></td></tr>
+                        <tr><td><p class="overlay-error-detail"></p></td></tr>
+                        <tr><td><textarea readonly class="overlay-error-text"></textarea></td></tr>
+                        <tr><td><button type="button" onclick="CloseOverlay();">Ok</button></td></tr>
+                    </table>
+                </div>
+                <div class="overlay-user-token">
+                    <table class="overlay-error-container">
+                        <tr><td colspan="2">Please enter a Github Authorization Token</td></tr>
+                        <tr>
+                            <td colspan="2">
+                                If you don't have one, please visit <a href="https://github.com/settings/tokens" target="_blank" style="color: blue;">this Page</a> to obtain one.<br />
+                                This Script needs access to the 'user' and 'gists' scope, you can untick all others.
+                            </td>
+                        <tr>
+                        <tr><td style="padding-right: 10px; text-align: right;">Token:</td><td><input type="text" class="user-token" style="width:90%;padding-left: 10px;text-align: center;" /></td></tr>
+                        <tr><td colspan="2">&nbsp;</td></tr>
+                        <tr><td colspan="2"><button type="button" onclick="UserTokenVerify();">Ok</button></td></tr>
+                    </table>
+                </div>
+                <div class="overlay-new-file">
+                    <table class="overlay-error-container">
+                        <tr><td colspan="2">Please enter the Filename for the new File:</td></tr>
+                        <tr><td colspan="2"><input type="text" class="file-name" style="width:90%;text-align: center;" value="dummy.js" /></td></tr>
+                        <tr><td><button type="button" onclick="GistCreateFile();">Ok</button></td><td><button type="button" onclick="CloseOverlay();">Cancel</button></td></tr>
+                    </table>
+                </div>
+                <div class="overlay-new-gist">
+                    <table class="overlay-error-container">
+                        <tr><td>Gist Name:</td><td><input type="text" class="gist-name" style="width:90%;text-align: center;" /></td></tr>
+                        <tr><td colspan="2">Public: <input type="checkbox" class="gist-public" /></td></tr>
+                        <tr><td><button type="button" onclick="GistCreateGist();">Ok</button></td><td><button type="button" onclick="CloseOverlay();">Cancel</button></td></tr>
+                    </table>
+                </div>
+                <div class="overlay-delete-file">
+                    <table class="overlay-error-container">
+                        <tr><td colspan="2">Are you sure you want to delete this File?</td></tr>
+                        <tr><td colspan="2"><span class="file-name"></span></td></tr>
+                        <tr><td><button type="button" onclick="GistDeleteFile();">Yes</button></td><td><button type="button" onclick="CloseOverlay();">Cancel</button></td></tr>
+                    </table>
+                </div>
+                <div class="overlay-delete-gist">
+                    <table class="overlay-error-container">
+                        <tr><td colspan="2">Are you sure you want to delete this Gist?</td></tr>
+                        <tr><td colspan="2"><span class="gist-name"></span></td></tr>
+                        <tr><td><button type="button" onclick="GistDeleteGist();">Yes</button></td><td><button type="button" onclick="CloseOverlay();">Cancel</button></td></tr>
+                    </table>
+                </div>
+                <div class="overlay-embed-gist">
+                    <table class="overlay-error-container">
+                        <tr><td colspan="2">Please copy &amp; paste this code into your Google Adwords Editor:</td></tr>
+                        <tr><td><textarea class="embed-text" style="width:90%; height: 150px;"></textarea></td></tr>
+                        <tr><td><button type="button" onclick="CloseOverlay();">Ok</button></td></tr>
+                    </table>
+                </div>
+                <div class="overlay-edit-dependencies">
+                    <table class="overlay-error-container">
+                        <tr><td colspan="2">Please enter your Dependencies here:</td></tr>
+                        <tr><td colspan="2">Write one Dependency in each Line, in the following Format: NAME | RAW_URL<br />Example: lodash | https://raw.githubusercontent.com/lodash/lodash/3.10.1/lodash.min.js<br />Syntax completion is only available for Github Addresses, however you can use others too.</td></tr>
+                        <tr><td colspan="2"><textarea class="dependencies-text" style="width:90%; height: 100px;"></textarea></td></tr>
+                        <tr><td><button type="button" onclick="ApplyDependencies();">Ok</button></td><td><button type="button" onclick="CloseOverlay();">Cancel</button></td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- The Main Content of the Page -->
+    <div id="content">
+        <div id="menucontainer">
+            <!-- The Main Menu -->
+            <div class="menuitem">
+                <button type="button" class="menubutton">File</button>
+                <ul class="submenu">
+                    <li>
+                        <div class="submenulink" id="menu_file_new_gist">
+                            <span class="submenuname">New Gist</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_file_delete_gist">
+                            <span class="submenuname">Delete Gist</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li class="separator"></li>
+                    <li>
+                        <div class="submenulink" id="menu_file_new">
+                            <span class="submenuname">New File</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_file_delete">
+                            <span class="submenuname">Delete File</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li class="separator"></li>
+                    <li>
+                        <div class="submenulink" id="menu_file_save">
+                            <span class="submenuname">Save</span>
+                            <span class="submenukey">Ctrl-S</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="menuitem">
+                <button type="button" class="menubutton">Gist</button>
+                <ul class="submenu">
+                    <li>
+                        <div class="submenulink" id="menu_gist_edit_dependencies">
+                            <span class="submenuname">Edit Dependencies</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_gist_embed">
+                            <span class="submenuname">Get Embedding Code</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li class="separator"></li>
+                    <li>
+                        <div class="submenulink" id="menu_gist_export">
+                            <span class="submenuname">Export</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="menuitem">
+                <button type="button" class="menubutton">Editor</button>
+                <ul class="submenu">
+                    <li>
+                        <div class="submenulink" id="menu_editor_keybindings">
+                            <span class="submenuname">Show Keybindings</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="menuitem">
+                <button type="button" class="menubutton">Theme</button>
+                <ul class="submenu">
+                    <li>
+                        <div class="submenulink" id="menu_theme_light">
+                            <span class="submenuname root">Light</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_0">
+                            <span class="submenuname leaf">Chrome</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_1">
+                            <span class="submenuname leaf">Clouds</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_2">
+                            <span class="submenuname leaf">Crimson Editor</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_3">
+                            <span class="submenuname leaf">Dawn</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_4">
+                            <span class="submenuname leaf">Dreamweaver</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_5">
+                            <span class="submenuname leaf">Eclipse</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_6">
+                            <span class="submenuname leaf">GitHub</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_7">
+                            <span class="submenuname leaf">IPlastic</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_8">
+                            <span class="submenuname leaf">Solarized Light</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_9">
+                            <span class="submenuname leaf">TextMate</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_10">
+                            <span class="submenuname leaf">Tomorrow</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_11">
+                            <span class="submenuname leaf">XCode</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_12">
+                            <span class="submenuname leaf">Kuroir</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_13">
+                            <span class="submenuname leaf">KatzenMilch</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_14">
+                            <span class="submenuname leaf">SQL Server</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_dark">
+                            <span class="submenuname root">Dark</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_15">
+                            <span class="submenuname leaf">Ambiance</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_16">
+                            <span class="submenuname leaf">Chaos</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_17">
+                            <span class="submenuname leaf">Clouds Midnight</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_18">
+                            <span class="submenuname leaf">Cobalt</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_19">
+                            <span class="submenuname leaf">idle Fingers</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_20">
+                            <span class="submenuname leaf">krTheme</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_21">
+                            <span class="submenuname leaf">Merbivore</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_22">
+                            <span class="submenuname leaf">Merbivore Soft</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_23">
+                            <span class="submenuname leaf">Mono Industrial</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_24">
+                            <span class="submenuname leaf">Monokai</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_25">
+                            <span class="submenuname leaf">Pastel on dark</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_26">
+                            <span class="submenuname leaf">Solarized Dark</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_27">
+                            <span class="submenuname leaf">Terminal</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_28">
+                            <span class="submenuname leaf">Tomorrow Night</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_29">
+                            <span class="submenuname leaf">Tomorrow Night Blue</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_30">
+                            <span class="submenuname leaf">Tomorrow Night Bright</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_31">
+                            <span class="submenuname leaf">Tomorrow Night 80s</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_32">
+                            <span class="submenuname leaf">Twilight</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="submenulink" id="menu_theme_33">
+                            <span class="submenuname leaf">Vibrant Ink</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="menuitem">
+                <button type="button" class="menubutton" id="usernamehere">User</button>
+                <ul class="submenu">
+                    <li>
+                        <div class="submenulink" id="menu_user_logoff">
+                            <span class="submenuname">Log off</span>
+                            <span class="submenukey"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Double Split-able Page -->
+        <div id="subcontent" class="split-pane horizontal-percent">
+            <div id="topcontent_wrapper" class="split-pane-component">
+                <div id="topcontent" class="split-pane vertical-percent">
+                    <!-- The Gist List on the left -->
+                    <div id="project_explorer_base" class="split-pane-component">
+                        <div id="project_explorer_frame">
+                            <div id="project_explorer_header">Gists</div>
+                            <div id="project_explorer_body">
+                                <div id="gist_list_container">
+                                    <div id="gist_list">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="v_resizer" class="split-pane-divider"></div>
+                    <!-- The Editor on the right -->
+                    <div id="editor_base" class="split-pane-component">
+                        <div id="editor_frame">
+                            <div id="editor_file_tabs">
+                            </div>
+                            <div id="editor_container">
+                                <!-- The Editor right-click menu -->
+                                <div id="editor_contextmenu">
+                                    <ul class="submenu">
+                                        <li>
+                                            <div class="submenulink" id="editor_ctx_autocomplete">
+                                                <span class="submenuname">Autocomplete</span>
+                                                <span class="submenukey">Something</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="submenulink" id="editor_ctx_rename">
+                                                <span class="submenuname">Rename</span>
+                                                <span class="submenukey">Something</span>
+                                            </div>
+                                        </li>
+                                        <li class="separator"></li>
+                                        <li>
+                                            <div class="submenulink" id="editor_ctx_showtype">
+                                                <span class="submenuname">Show Type</span>
+                                                <span class="submenukey">Something</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="submenulink" id="editor_ctx_showdef">
+                                                <span class="submenuname">Show Definition</span>
+                                                <span class="submenukey">Something</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="submenulink" id="editor_ctx_showrefs">
+                                                <span class="submenuname">Show References</span>
+                                                <span class="submenukey">Something</span>
+                                            </div>
+                                        </li>
+                                        <li class="separator"></li>
+                                        <li>
+                                            <div class="submenulink" id="editor_ctx_beautify">
+                                                <span class="submenuname">Beautify</span>
+                                                <span class="submenukey">Something</span>
+                                            </div>
+                                        </li>
+                                        <li class="separator"></li>
+                                        <li>
+                                            <div class="submenulink" id="editor_ctx_save">
+                                                <span class="submenuname">Save</span>
+                                                <span class="submenukey">Ctrl-S</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- the ace editor -->
+                                <pre id="editor"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="h_resizer" class="split-pane-divider"></div>
+            <!-- the log console on the bottom -->
+            <div id="console_base" class="split-pane-component">
+                <div id="console_frame"><div id="console_pad"><div id="console_lines"></div></div></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
