@@ -1,7 +1,7 @@
 # google-adwords-script-editor
 A HTML-based editor to edit Google Adwords Scripts and save them on Github.
 
-A preview is available at http://turtlefight.de/adwords/AdWordsEditor/
+A preview is available at http://turtlefight.de/github/google-adwords-script-editor/
 
 Simply download this repository as zip and extract it into your webroot.
 Then open the index.html with your Browser.
