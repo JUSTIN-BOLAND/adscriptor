@@ -1,6 +1,7 @@
 /*
-    Google Adwords Script Editor
-    Copyright (c) 2015 Sven Fisch, crealytics GmbH All Rights Reserved.
+    AdScriptor
+    Copyright (c) 2016 crealytics GmbH All Rights Reserved.
+    See LICENSE.md for License Information.
 */
 /*
     Contains some Functions to create and edit the internalStartup.js File contained in every Gist.

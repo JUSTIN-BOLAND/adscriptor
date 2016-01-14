@@ -1,6 +1,7 @@
 /*
-    Google Adwords Script Editor
-    Copyright (c) 2015 Sven Fisch, crealytics GmbH All Rights Reserved.
+    AdScriptor
+    Copyright (c) 2016 crealytics GmbH All Rights Reserved.
+    See LICENSE.md for License Information.
 */
 /*
     Manages all Connections to github.
