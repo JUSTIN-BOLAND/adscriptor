@@ -51,7 +51,7 @@ var gisty = new (function () {
     this.loadGists = function (userdata) {
         Logger.info("Login successfull. Welcome back, " + userdata.login + "!");
         $("button#usernamehere").html(userdata.login); // Replace the User-Menu Button in the Main Menu with the Name of the Github User
-        Logger.info("Retrieving Gists...");
+        Logger.info("Retrieving Scripts...");
         this.gist_url = userdata.gists_url.replace("{/gist_id}", ""); // Remove Gist Id from Gist Url
         LoadGistList(this.gist_url, this.token, function (d) { gisty.showGists(d); }); // Load all Gists and display them once finished
     };
@@ -242,7 +242,7 @@ var gisty = new (function () {
     this.autosave = function () {
         // No Gist selected, so we can save nothing
         if (this.selectedGist.length === 0) {
-            Logger.warning("Autosave failed: no gist selected.");
+            Logger.warning("Autosave failed: no script selected.");
         }
         else {
             // Check if any File has changed
@@ -460,7 +460,7 @@ function GistCreateFile() {
     // Check if Gist is selected and File doesn't exist.
     var gist = gisty.getCurrentGist();
     if (gist === null) {
-        Logger.error("Please select a Gist first.");
+        Logger.error("Please select a Script first.");
         return;
     }
 
@@ -475,7 +475,7 @@ function GistCreateFile() {
 
 /* Displays the new Gist Dialog */
 function NewGistPrompt() {
-    $("div#overlay-header").html("New Gist");
+    $("div#overlay-header").html("New Script");
     $("div#overlay-body").html($("div#overlay-templates div.overlay-new-gist").html());
     $("div#force-overlay").css("display", "block");
 }
@@ -487,7 +487,7 @@ function GistCreateGist() {
     var public = $("div#overlay-body input.gist-public").prop('checked');
     CloseOverlay();
     if (name.length == 0) {
-        Logger.error("Please enter a valid Gist Name.");
+        Logger.error("Please enter a valid Script Name.");
         return;
     }
     // Create new Gist Data
@@ -515,7 +515,7 @@ function GistCreateGist() {
                Logger.info("Created Gist '" + name + "' successfully.");
                location.reload();
            }).error(function (e) {
-               LogErrorOverlay("Failed to create Gist '" + name + "'.", "Github reported an error for creating this gist.", JSON.stringify(e, null, 2));
+               LogErrorOverlay("Failed to create Script '" + name + "'.", "Github reported an error for creating this gist.", JSON.stringify(e, null, 2));
            });
 }
 
@@ -523,11 +523,11 @@ function GistCreateGist() {
 function DeleteGistPrompt() {
     var gist = gisty.getCurrentGist();
     if (gist === null) {
-        Logger.error("Please select the Gist you want to delete.");
+        Logger.error("Please select the Script you want to delete.");
         return;
     }
 
-    $("div#overlay-header").html("Delete Gist");
+    $("div#overlay-header").html("Delete Script");
     $("div#overlay-body").html($("div#overlay-templates div.overlay-delete-gist").html());
     $("div#overlay-body span.gist-name").text(gist.name);
     $("div#force-overlay").css("display", "block");
@@ -545,10 +545,10 @@ function GistDeleteGist() {
         cache: false
     }
          ).success(function (gistdata) {
-             Logger.info("Deleted Gist '" + name + "' successfully.");
+             Logger.info("Deleted Script '" + name + "' successfully.");
              location.reload();
          }).error(function (e) {
-             LogErrorOverlay("Failed to delete Gist '" + name + "'.", "Github reported an error for deleting this gist.", JSON.stringify(e, null, 2));
+             LogErrorOverlay("Failed to delete Script '" + name + "'.", "Github reported an error for deleting this gist.", JSON.stringify(e, null, 2));
          });
 }
 
@@ -556,7 +556,7 @@ function GistDeleteGist() {
 function DeleteFilePrompt() {
     var gist = gisty.getCurrentGist();
     if (gist === null) {
-        Logger.error("Please select a Gist first from which you want to delete a File.");
+        Logger.error("Please select a Script first from which you want to delete a File.");
         return;
     }
     var filename = $("div.active_tab").text().trim();
@@ -597,7 +597,7 @@ function GistDeleteFile() {
 function EmbedGistPopup() {
     var gist = gisty.getCurrentGist();
     if (gist === null) {
-        Logger.error("Please select the Gist you want to embed.");
+        Logger.error("Please select the Script you want to embed into AdWords.");
         return;
     }
     // create the embedding code
@@ -608,9 +608,10 @@ function EmbedGistPopup() {
 					 '/* AdWordsApp.ads() MccApp.accounts() DriveApp.getFiles() Jdbc.getCloudSqlConnection() MailApp.sendEmail() SpreadsheetApp.getActive() UrlFetchApp.fetch() */';
     var text = embed_text.replace("$URL", raw_url);
     // show the overlay
-    $("div#overlay-header").html("Embed Gist");
+    $("div#overlay-header").html("Show AdWords Embedding Code");
     $("div#overlay-body").html($("div#overlay-templates div.overlay-embed-gist").html());
-    $("div#overlay-body textarea").val(text);
+    var markall = function(){ $this = $(this); setTimeout(function(){ $this.select(); }, 1); };
+    $("div#overlay-body textarea").val(text).focus(markall).click(markall);
     $("div#force-overlay").css("display", "block");
 }
 
@@ -618,7 +619,7 @@ function EmbedGistPopup() {
 function GistEditDependencies() {
     var gist = gisty.getCurrentGist();
     if (gist === null) {
-        Logger.error("Please select a Gist to edit Dependencies.");
+        Logger.error("Please select a Script to edit Dependencies.");
         return;
     }
     // extract the dependencies from the bootstrap code and format them nicely
@@ -630,7 +631,7 @@ function GistEditDependencies() {
     }
     dep_str = dep_str.trim();
     // show the user the dependencies
-    $("div#overlay-header").html("Gist Dependencies");
+    $("div#overlay-header").html("Script Dependencies");
     $("div#overlay-body").html($("div#overlay-templates div.overlay-edit-dependencies").html());
     $("div#overlay-body textarea").val(dep_str);
     $("div#force-overlay").css("display", "block");
@@ -681,7 +682,7 @@ function ApplyDependencies() {
 function ExportGist() {
     var gist = gisty.getCurrentGist();
     if (gist === null) {
-        Logger.error("Please select the Gist you want to export.");
+        Logger.error("Please select the Script you want to export.");
         return;
     }
     // Create a nice little zip File from the Gist
