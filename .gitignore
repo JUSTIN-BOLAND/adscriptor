@@ -210,3 +210,8 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+# Ignore Google API Files
+/res/api-scraper/api-responses/*.*
+# And ignore api-scraper output
+/res/api-scraper/output/*.*
