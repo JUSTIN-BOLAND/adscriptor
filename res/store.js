@@ -3,14 +3,13 @@
     Copyright (c) 2016 crealytics GmbH All Rights Reserved.
     See LICENSE.md for License Information.
 */
+
 /*
-    A Bridge between our Scripts and localStorage.
     Tries to store Key-Value Pairs in local storage,
     cookies or a plain javascript object.
     Available Functions: getItem(name), setItem(name, value), removeItem(name)
     Only String Values are supported for name and value.
 */
-
 var Store = (function () {
     /* A Interface for the localStorage Object of the Browser */
     function localStorageInterface() {
