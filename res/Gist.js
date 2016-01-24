@@ -12,12 +12,56 @@
 
 /*
     Represents a single Gist.
+    data is the data github returned for this gist.
 */
-function Gist(requester, id)
+function Gist(requester, data)
 {
+    // Validate Parameters
+    if (typeof requester !== "object" || requester === null || !(requester instanceof GistRequester))
+        throw new TypeError("Parameter requester should be an GistRequester.");
+    else if (typeof data !== "object" || data === null)
+        throw new TypeError("Parameter data should be an object.");
 
+    this.requester = requester;
+    this.data = data;
 }
 
+/*
+    Check if History Information is loaded for this Gist.
+*/
+Gist.prototype.hasHistory = function () {
+    return this.hasOwnProperty("history");
+}
+
+/*
+    Check if all Files are loaded for this Gist.
+*/
+Gist.prototype.hasFiles = function () {
+    return this.hasOwnProperty("files_loaded");
+}
+
+/*
+    Gets the Name of the Gist.
+*/
+Gist.prototype.getName = function () {
+    return this.data.description;
+}
+
+
+/*
+    A List of all Gists the User has.
+    data is the data github returned for the gist list.
+*/
+function GistList(requester, data)
+{
+    // Validate Parameters
+    if (typeof requester !== "object" || requester === null || !(requester instanceof GistRequester))
+        throw new TypeError("Parameter requester should be an GistRequester.");
+    else if (typeof data !== "object" || data === null)
+        throw new TypeError("Parameter data should be an object.");
+
+    this.requester = requester;
+}
 
 
 /*
@@ -48,12 +92,28 @@ GistUser.prototype.init = function (opt_callback) {
         return;
 
     var that = this;
+    // Request User Data
     this.requester.requestUserInformation(function (success, data_or_error, xhr) {
         // Save Userdata on success
         if (success) {
             that.userdata = data_or_error;
+            // Request Gist Data
+            this.requester.requestGistInformation(function (success, data_or_error, xhr) {
+                // Process Gist Data on Success
+                if (success) {
+                    that.gistdata = new GistList(data_or_error);
+
+                }
+                // Failed to get Gistdata
+                else {
+                    delete that.userdata;
+                    opt_callback(false);
+                }
+            });
         }
-                opt_callback(false, data_or_error);
+        // Failed to get Userdata
+        else {
+            opt_callback(false);
         }
     });
 };
@@ -62,7 +122,7 @@ GistUser.prototype.init = function (opt_callback) {
     Returns whether the userdata has already been fetched or not.
 */
 GistUser.prototype.isReady = function () {
-    return this.hasOwnProperty("userdata");
+    return this.hasOwnProperty("userdata") && this.hasOwnProperty("gistdata");
 }
 
 /*

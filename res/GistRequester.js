@@ -197,11 +197,25 @@ GistRequester.prototype.createRequest = function (url, type, opt_callback, opt_p
     For Parameter information about callback refer to GistRequester.createRequest(opt_callback)
 */
 GistRequester.prototype.requestUserInformation = function (callback) {
+    // Validate Parameters
     if (typeof callback !== "function")
         throw new TypeError("Parameter callback should be a function.");
 
     this.createRequest("https://api.github.com/user", "GET", callback);
 };
+
+/*
+    Requests a list of all gists of the current user.
+    The Callback will be called once the information is available.
+    For Parameter information about callback refer to GistRequester.createRequest(opt_callback)
+*/
+GistRequester.prototype.requestGistInformation = function (callback) {
+    // Validate Parameters
+    if (typeof callback !== "function")
+        throw new TypeError("Parameter callback should be a function.");
+
+    this.createRequest("https://api.github.com/gists", "GET", callback);
+}
 
 /*
     Gets the User as GistUser Object.
