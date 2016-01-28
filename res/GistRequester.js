@@ -99,7 +99,7 @@ GistRequester.prototype.authorizeToken = function (token, opt_callback) {
                     git_msg = status.responseJSON.message;
             }
         }
-        // Call the Callback with the Success Status.
+        // Call the Callback with the Http Error.
         if (opt_callback)
             opt_callback(false, xhr.status + " " + xhr.statusText + (git_msg ? (" - " + git_msg) : ""), xhr);
     });
@@ -185,7 +185,7 @@ GistRequester.prototype.createRequest = function (url, type, opt_callback, opt_p
                     git_msg = status.responseJSON.message;
             }
         }
-        // Call the Callback with the Success Status.
+        // Call the Callback with the Http Error.
         if (opt_callback)
             opt_callback(false, xhr.status + " " + xhr.statusText + (git_msg ? (" - " + git_msg) : ""), xhr);
     });
@@ -215,7 +215,22 @@ GistRequester.prototype.requestGistInformation = function (callback) {
         throw new TypeError("Parameter callback should be a function.");
 
     this.createRequest("https://api.github.com/gists", "GET", callback);
-}
+};
+
+/*
+    Requests details about a single gist (history & files)
+    The Callback will be called once the information is available.
+    For Parameter information about callback refer to GistRequester.createRequest(opt_callback)
+*/
+GistRequester.prototype.requestGistDetail = function (gist_id, callback) {
+    // Validate Parameters
+    if (typeof gist_id !== "string")
+        throw new TypeError("Parameter gist_id should be a string.");
+    else if (typeof callback !== "function")
+        throw new TypeError("Parameter callback should be a function.");
+
+    this.createRequest("https://api.github.com/gists/" + gist_id, "GET", callback);
+};
 
 /*
     Gets the User as GistUser Object.

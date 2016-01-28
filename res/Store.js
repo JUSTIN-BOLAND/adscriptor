@@ -7,12 +7,14 @@
 /*
     Tries to store Key-Value Pairs in local storage,
     cookies or a plain javascript object.
-    Available Functions: getItem(name), setItem(name, value), removeItem(name)
+    Available Functions: getItem(name), setItem(name, value), removeItem(name), interfaceName()
     Only String Values are supported for name and value.
+    interfaceName returns the Interface Name that backs the Store. Possible values are "localStorage", "cookie", "object".
 */
 var Store = (function () {
     /* A Interface for the localStorage Object of the Browser */
     function localStorageInterface() {
+        this.name = "localStorage";
         this.working = false;
         this.save = function (name, data) { if (data !== null) window.localStorage.setItem(name, data); else window.localStorage.removeItem(name); };
         this.load = function (name) { return window.localStorage.getItem(name); };
@@ -29,6 +31,7 @@ var Store = (function () {
     }
     /* A Interface for the cookie storage */
     function cookieInterface() {
+        this.name = "cookie";
         this.working = false;
         this.save = function (name, data) { if (data !== null) setCookie(name, data); else deleteCookie(name); }
         this.load = function (name) { return getCookie(name); }
@@ -56,6 +59,7 @@ var Store = (function () {
     }
     /* A Interface for a simple Javascript Object */
     function objectInterface() {
+        this.name = "object";
         this.working = true; // objects work always
         var store = {};
         this.save = function (name, data) { if (data !== null) store[name] = data; else delete store[name]; };
@@ -81,6 +85,7 @@ var Store = (function () {
     return {
         setItem: function (name, value) { container.save(name, value); },
         getItem: function (name) { return container.load(name); },
-        removeItem: function (name) { container.save(name, null); }
+        removeItem: function (name) { container.save(name, null); },
+        interfaceName: function () { return container.name; }
     };
 })();

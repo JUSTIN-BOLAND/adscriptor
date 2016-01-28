@@ -61,6 +61,7 @@ div#force-overlay {
   width: 100%;
   height: 100%;
   z-index: 100000;
+  background-color: rgba(0, 0, 0, 0.3);
   display: none;
 }
 
@@ -531,4 +532,36 @@ div.gist:last-child {
 
 div.active-gist {
   background-color: rgba(27, 177, 153, 0.5);
+}
+
+span.log-timestamp {
+    color: #FFFFFF;
+}
+
+span.log-bracket {
+    color: #909090;
+}
+
+span.log-severity-debug {
+    color: #c700f6;
+}
+
+span.log-severity-verbose {
+    color: #00fff3;
+}
+
+span.log-severity-info {
+    color: #37d500;
+}
+
+span.log-severity-warning {
+    color: #e8dc00;
+}
+
+span.log-severity-error {
+    color: #d80909;
+}
+
+span.log-severity-fatal {
+    color: #dd0000;
 }

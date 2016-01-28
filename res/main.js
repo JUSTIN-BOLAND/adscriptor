@@ -1,11 +1,64 @@
+"use strict";
 /*
     AdScriptor
     Copyright (c) 2016 crealytics GmbH All Rights Reserved.
     See LICENSE.md for License Information.
 */
 /*
-  Main Script File, all others are started form here
+  Main Script File, the source of it all.
 */
+
+/*
+    Main Class, controls interaction between the User, the Editor and the Gist System.
+*/
+function Controller() {
+    // Create Components
+    this.requester = new GistRequester();
+    // this.editor = new Editor();
+
+    // Output Copyright
+    Logger.info("Powered by crealytics GmbH");
+    Logger.info("Starting, please wait...");
+
+    // Check which Store we are using (localStorage is permanent, cookie is semi-permanent, object is temporary)
+    var store_interface = Store.interfaceName();
+    if(store_interface != "localStorage")
+    {
+        if (store_interface == "cookie")
+            Logger.verbose("localStorage is not available, falling back to cookies.");
+        else
+            Logger.verbose("localStorage is not available, falling back to temporary storage.");
+    }
+}
+
+/*
+    Called once the Page is fully loaded.
+*/
+Controller.prototype.init = function () {
+
+};
+
+// The global controller object.
+var controller = null;
+
+/*
+    Executed when the DOM is ready.
+*/
+$(function () {
+    // Create the Controller.
+    controller = new Controller();
+});
+
+/*
+    Executed when the complete page is fully loaded.
+*/
+$(window).load(function () {
+    // Initialize the Controller.
+    controller.init();
+});
+
+// Old Stuff
+// TODO: Refractor this
 
 /* Executed when DOM is ready */
 $(function () {
@@ -24,6 +77,13 @@ $(function () {
     $("div#subcontent").splitPane();
     $("div#topcontent").splitPane();
     
+    Logger.debug("DEBUG MESSAGE");
+    Logger.verbose("VERBOSE MESSAGE");
+    Logger.info("INFO MESSAGE");
+    Logger.warning("WARNING MESSAGE");
+    Logger.error("ERROR MESSAGE");
+    Logger.fatal("FATAL MESSAGE");
+
     // initialize all main menu entries
     initMainMenu();
 });

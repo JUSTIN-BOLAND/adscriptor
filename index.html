@@ -6,24 +6,93 @@
     <!-- See LICENSE.md for License Information. -->
     <meta charset="UTF-8">
     <title>Google AdWords Script Editor</title>
-    <!-- Libs -->
-    <script src="acetern/ace.js"></script>
+
+    <!-- External Libraries -->
     <script src="res/lib/jquery-2.1.4.min.js"></script>
     <script src="res/lib/split-pane.min.js"></script>
     <link rel="stylesheet" href="res/lib/split-pane.css" />
     <script src="res/lib/context-menu.min.js"></script>
     <script src="res/lib/jszip.min.js"></script>
     <script src="res/lib/filesaver.min.js"></script>
+
+    <!-- Preload Ace (to avoid asynchronous requests) -->
+    <script src="acetern/ace.js"></script>
+    <script src="acetern/ext-beautify.js"></script>
+    <script src="acetern/ext-chromevox.js"></script>
+    <script src="acetern/ext-elastic_tabstops_lite.js"></script>
+    <script src="acetern/ext-emmet.js"></script>
+    <script src="acetern/ext-error_marker.js"></script>
+    <script src="acetern/ext-html_beautify.js"></script>
+    <script src="acetern/ext-keybinding_menu.js"></script>
+    <script src="acetern/ext-language_tools.js"></script>
+    <script src="acetern/ext-linking.js"></script>
+    <script src="acetern/ext-modelist.js"></script>
+    <script src="acetern/ext-old_ie.js"></script>
+    <script src="acetern/ext-searchbox.js"></script>
+    <script src="acetern/ext-settings_menu.js"></script>
+    <script src="acetern/ext-spellcheck.js"></script>
+    <script src="acetern/ext-split.js"></script>
+    <script src="acetern/ext-static_highlight.js"></script>
+    <script src="acetern/ext-statusbar.js"></script>
+    <script src="acetern/ext-tern.js"></script>
+    <script src="acetern/ext-textarea.js"></script>
+    <script src="acetern/ext-themelist.js"></script>
+    <script src="acetern/ext-whitespace.js"></script>
+    <script src="acetern/mode-javascript.js"></script>
+    <script src="acetern/theme-ambiance.js"></script>
+    <script src="acetern/theme-chaos.js"></script>
+    <script src="acetern/theme-chrome.js"></script>
+    <script src="acetern/theme-clouds.js"></script>
+    <script src="acetern/theme-clouds_midnight.js"></script>
+    <script src="acetern/theme-cobalt.js"></script>
+    <script src="acetern/theme-crimson_editor.js"></script>
+    <script src="acetern/theme-dawn.js"></script>
+    <script src="acetern/theme-dreamweaver.js"></script>
+    <script src="acetern/theme-eclipse.js"></script>
+    <script src="acetern/theme-github.js"></script>
+    <script src="acetern/theme-idle_fingers.js"></script>
+    <script src="acetern/theme-iplastic.js"></script>
+    <script src="acetern/theme-katzenmilch.js"></script>
+    <script src="acetern/theme-kr_theme.js"></script>
+    <script src="acetern/theme-kuroir.js"></script>
+    <script src="acetern/theme-merbivore.js"></script>
+    <script src="acetern/theme-merbivore_soft.js"></script>
+    <script src="acetern/theme-monokai.js"></script>
+    <script src="acetern/theme-mono_industrial.js"></script>
+    <script src="acetern/theme-pastel_on_dark.js"></script>
+    <script src="acetern/theme-solarized_dark.js"></script>
+    <script src="acetern/theme-solarized_light.js"></script>
+    <script src="acetern/theme-sqlserver.js"></script>
+    <script src="acetern/theme-terminal.js"></script>
+    <script src="acetern/theme-textmate.js"></script>
+    <script src="acetern/theme-tomorrow.js"></script>
+    <script src="acetern/theme-tomorrow_night.js"></script>
+    <script src="acetern/theme-tomorrow_night_blue.js"></script>
+    <script src="acetern/theme-tomorrow_night_bright.js"></script>
+    <script src="acetern/theme-tomorrow_night_eighties.js"></script>
+    <script src="acetern/theme-twilight.js"></script>
+    <script src="acetern/theme-vibrant_ink.js"></script>
+    <script src="acetern/theme-xcode.js"></script>
+    <script src="acetern/worker-javascript.js"></script>
+    <script src="acetern/worker-tern.js"></script>
+    <script src="acetern/snippets/javascript.js"></script>
+
+    <!-- AdWordsApi Definitions for Autocompletion -->
+    <script src="res/AdWordsApi.js"></script>
+
     <!-- Scripts -->
-    <script src="res/logger.js"></script>
-    <script src="res/store.js"></script>
+    <script src="res/Logger.js"></script>
+    <script src="res/Store.js"></script>
     <script src="res/startup_creator.js"></script>
-    <script src="res/overlay.js"></script>
-    <script src="res/editor.js"></script>
+    <script src="res/Overlay.js"></script>
+    <script src="res/Editor.js"></script>
     <script src="res/gisty.js"></script>
-    <script src="res/main.js"></script>
+    
     <script src="res/GistRequester.js"></script>
     <script src="res/Gist.js"></script>
+
+    <script src="res/main.js"></script>
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="res/main.css" />
 </head>

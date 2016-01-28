@@ -444,10 +444,19 @@
   print("Finished processing, generating API Definition File for tern...\n");
   
   $json_data = json_encode($definition, JSON_PRETTY_PRINT);
+  $json_data_compressed = json_encode($definition);
   
   $date = date('y-m-d H-i-s');
   $output_filename = "output/$date AdWordsApi.json";
+  
+  // Write JSON File
   file_put_contents($output_filename, $json_data);
+  
+  // Write Javascript Wrapper File
+  $output_filename = substr($output_filename, 0, -4) . 'js';
+  $javascript_wrapper = 'var AdWordsApi = JSON.parse("' . addslashes($json_data_compressed) . '");';
+  file_put_contents($output_filename, $javascript_wrapper);
+  
   
   print("Finished!\n");
 ?>
