@@ -1,0 +1,19 @@
+{
+  "name": "adscriptor-frontend",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "The AdScriptor Frontend for Google AdWords Scripts Development",
+  "author": "Sven Fisch",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crealytics/adscriptor"
+  },
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "grunt": "^1.0.1",
+    "grunt-contrib-coffee": "^1.0.0",
+    "grunt-contrib-jade": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0"
+  },
+  "dependencies": {}
+}
