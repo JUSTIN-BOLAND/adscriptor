@@ -10,11 +10,13 @@ module.exports = function (grunt) {
           client: true,
           namespace: false
         },
-        expand: true,
-        cwd: 'app/',
-        src: '**/*.jade',
-        dest: 'build/',
-        ext: '.js'
+        files: [{
+          expand: true,
+          cwd: 'app/',
+          src: '**/*.jade',
+          dest: 'build/',
+          ext: '.js'
+        }]
       },
       watch_compile: {
         options: {
@@ -29,16 +31,32 @@ module.exports = function (grunt) {
         options: {
           sourceMap: true
         },
-        expand: true,
-        cwd: 'app/',
-        src: '**/*.coffee',
-        dest: 'build/',
-        ext: '.js'
+        files: [{
+          expand: true,
+          cwd: 'app/',
+          src: '**/*.coffee',
+          dest: 'build/',
+          ext: '.js'
+        }]
       },
       watch_compile: {
         options: {
           sourceMap: true
         }
+      }
+    },
+    sass: {
+      compile: {
+        files: [{
+          expand: true,
+          cwd: 'app/',
+          src: '**/*.scss',
+          dest: 'build/',
+          ext: '.css'
+        }]
+      },
+      watch_compile: {
+
       }
     },
     watch: {
@@ -52,6 +70,13 @@ module.exports = function (grunt) {
       coffee: {
         files: 'app/**/*.coffee',
         tasks: ['coffee:watch_compile'],
+        options: {
+          spawn: false
+        }
+      },
+      sass: {
+        files: 'app/**/*.scss',
+        tasks: ['sass:watch_compile'],
         options: {
           spawn: false
         }
@@ -69,14 +94,20 @@ module.exports = function (grunt) {
       destfile = filepath.replace('.coffee', '.js').replace(/app(\/|\\)scripts(\/|\\)/, 'build$1scripts$2');
       file[destfile] = filepath;
       grunt.config('coffee.watch_compile.files', file);
+    } else if (filepath.indexOf('.scss') !== -1) {
+      destfile = filepath.replace('.scss', '.css').replace(/app(\/|\\)styles(\/|\\)/, 'build$1styles$2');
+      file[destfile] = filepath;
+      grunt.config('sass.watch_compile.files', file);
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
-  grunt.registerTask('default', ['jade:compile', 'coffee:compile']);
-  grunt.registerTask('compile', ['jade:compile', 'coffee:compile']);
+  grunt.registerTask('compile', ['jade:compile', 'coffee:compile', 'sass:compile']);
   grunt.registerTask('development', ['compile', 'watch']);
+
+  grunt.registerTask('default', ['compile'])
 };

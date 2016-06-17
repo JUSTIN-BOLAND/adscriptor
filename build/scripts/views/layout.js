@@ -17,7 +17,7 @@
 
       AppLayout.prototype.regions = function() {
         return {
-          content: '.content',
+          layout: '.layout',
           overlay: '.overlay'
         };
       };

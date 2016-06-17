@@ -10,5 +10,5 @@
     template: template
 
     regions: ->
-      content: '.content'
+      layout: '.layout'
       overlay: '.overlay'

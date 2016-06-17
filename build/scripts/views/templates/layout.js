@@ -5,7 +5,7 @@ var buf = [];
 var jade_mixins = {};
 var jade_interp;
 
-buf.push("<div class=\"main-container\"><div class=\"overlay\"></div><div class=\"content\"></div></div>");;return buf.join("");
+buf.push("<div class=\"app-container\"><div class=\"overlay\"></div><div class=\"layout\"></div></div>");;return buf.join("");
 }
 
 });
