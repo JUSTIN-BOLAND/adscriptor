@@ -1,7 +1,7 @@
 {
 "version": 3,
 "mappings": "AAAA,8BAA+B;EAC7B,gBAAgB,EAAE,IAAI;EACtB,KAAK,EAAE,GAAG",
-"sources": ["../../app/styles/theme.solarized.scss"],
+"sources": ["../../app/styles/theme-solarized.scss"],
 "names": [],
-"file": "theme.solarized.css"
+"file": "theme-solarized.css"
 }
