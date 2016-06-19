@@ -6,11 +6,48 @@ window.requireJS = require.config
   map:
     '*':
       marionette: 'backbone.marionette'
+      'jquery-ui/accordion': 'jquery-ui'
+      'jquery-ui/autocomplete': 'jquery-ui'
+      'jquery-ui/button': 'jquery-ui'
+      'jquery-ui/core': 'jquery-ui'
+      'jquery-ui/datepicker': 'jquery-ui'
+      'jquery-ui/dialog': 'jquery-ui'
+      'jquery-ui/draggable': 'jquery-ui'
+      'jquery-ui/droppable': 'jquery-ui'
+      'jquery-ui/effect': 'jquery-ui'
+      'jquery-ui/effect-blind': 'jquery-ui'
+      'jquery-ui/effect-bounce': 'jquery-ui'
+      'jquery-ui/effect-clip': 'jquery-ui'
+      'jquery-ui/effect-drop': 'jquery-ui'
+      'jquery-ui/effect-explode': 'jquery-ui'
+      'jquery-ui/effect-fade': 'jquery-ui'
+      'jquery-ui/effect-fold': 'jquery-ui'
+      'jquery-ui/effect-highlight': 'jquery-ui'
+      'jquery-ui/effect-puff': 'jquery-ui'
+      'jquery-ui/effect-pulsate': 'jquery-ui'
+      'jquery-ui/effect-scale': 'jquery-ui'
+      'jquery-ui/effect-shake': 'jquery-ui'
+      'jquery-ui/effect-size': 'jquery-ui'
+      'jquery-ui/effect-slide': 'jquery-ui'
+      'jquery-ui/effect-transfer': 'jquery-ui'
+      'jquery-ui/menu': 'jquery-ui'
+      'jquery-ui/mouse': 'jquery-ui'
+      'jquery-ui/position': 'jquery-ui'
+      'jquery-ui/progressbar': 'jquery-ui'
+      'jquery-ui/resizable': 'jquery-ui'
+      'jquery-ui/selectable': 'jquery-ui'
+      'jquery-ui/selectmenu': 'jquery-ui'
+      'jquery-ui/slider': 'jquery-ui'
+      'jquery-ui/sortable': 'jquery-ui'
+      'jquery-ui/spinner': 'jquery-ui'
+      'jquery-ui/tabs': 'jquery-ui'
+      'jquery-ui/tooltip': 'jquery-ui'
+      'jquery-ui/widget': 'jquery-ui'
   locale: 'en'
   shim:
     jquery:
       exports: '$'
-    jqueryui:
+    'jquery-ui':
       deps: ['jquery']
     underscore:
       exports: '_'
@@ -29,7 +66,7 @@ window.requireJS = require.config
 
   paths:
     jquery: '../../bower_components/jquery/dist/jquery'
-    jqueryui: '../../bower_components/jquery-ui/jquery-ui'
+    'jquery-ui': '../../bower_components/jquery-ui/jquery-ui'
     underscore: '../../bower_components/underscore/underscore'
     backbone: '../../bower_components/backbone/backbone'
     'backbone.validation': '../../bower_components/backbone.validation/dist/backbone-validation-amd'
