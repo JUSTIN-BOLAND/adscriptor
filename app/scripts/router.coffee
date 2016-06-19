@@ -1,7 +1,9 @@
 ﻿define [
   'marionette'
+  './editor/editor'
 ], (
   Marionette
+  EditorGrid
 ) ->
   class AppRouter extends Marionette.AppRouter
     routes:
@@ -16,7 +18,7 @@
 
     index: ->
       Configuration =
-        isConfigured: -> false
+        isConfigured: -> true
       unless Configuration.isConfigured()
         @navigate('configuration', trigger: true)
       else
@@ -26,7 +28,13 @@
       #@app.layout.content.show new Marionette.ItemView()
 
     editor: ->
-      #@app.layout.content.show new Marionette.ItemView()
+      console.log 'routing'
+      @app.layout.layout.show new EditorGrid
+        collection: new Backbone.Collection([
+          name: 'foo'
+        ,
+          name: 'bar'
+        ])
 
 
 

@@ -61,7 +61,11 @@ window.requireJS = require.config
       exports: 'Radio'
     'backbone.marionette':
       deps: ['backbone']
+    'backbone.babysitter':
+      deps: ['backbone']
     bootstrap:
+      deps: ['jquery']
+    gridster:
       deps: ['jquery']
 
   paths:
