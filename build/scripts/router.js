@@ -27,7 +27,7 @@
         var Configuration;
         Configuration = {
           isConfigured: function() {
-            return false;
+            return true;
           }
         };
         if (!Configuration.isConfigured()) {
@@ -43,7 +43,18 @@
 
       AppRouter.prototype.configuration = function() {};
 
-      AppRouter.prototype.editor = function() {};
+      AppRouter.prototype.editor = function() {
+        console.log('routing');
+        return this.app.layout.layout.show(new EditorGrid({
+          collection: new Backbone.Collection([
+            {
+              name: 'foo'
+            }, {
+              name: 'bar'
+            }
+          ])
+        }));
+      };
 
       return AppRouter;
 

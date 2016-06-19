@@ -79,8 +79,14 @@ window.requireJS = require.config
     'backbone.wreqr': '../../bower_components/backbone.wreqr/lib/backbone.wreqr'
     'backbone.marionette': '../../bower_components/backbone.marionette/lib/backbone.marionette'
     jade: '../../bower_components/jade/runtime'
+    gridster: '../../bower_components/gridster/dist/jquery.gridster'
+    bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap'
 
 # load our app
-requireJS ['jquery', 'app'], (jQuery, App) ->
+requireJS [
+  'jquery'
+  'app'
+  'bootstrap'
+], (jQuery, App) ->
   # Start our Application when the DOM is ready
   $ -> App.start()
