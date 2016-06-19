@@ -1,21 +1,23 @@
+default: compile distribute
+
 # compiles all source files
 compile:
 	grunt coffee:compile
 	grunt jade:compile
 	grunt sass:compile
 
-# Installs all needed dependencies
+# install all dependencies to run
 install:
-	# ruby & sass gem are needed to compile sass
 	gem install sass
-	# Install npm & bower dependencies
-	npm install grunt -g
+	npm install grunt-cli -g
 	npm install bower -g
 	npm install
 	bower install
 
-
-
-# watches for changes and re-compiles on-the-fly
-watch:
+# watches all files and recompiles them on change
+watch: compile
 	grunt watch
+
+# Copies the final page into the dist/ folder
+distribute:
+	grunt distribute
