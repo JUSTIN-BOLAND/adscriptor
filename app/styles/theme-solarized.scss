@@ -1,4 +1,4 @@
-/*
+﻿/*
 exports.isDark = true;
 exports.cssClass = "ace-solarized-dark";
 exports.cssText = ".ace-solarized-dark .ace_gutter {\
@@ -83,26 +83,49 @@ color: #657B83\
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNg0Db1ZVCxc/sPAAd4AlUHlLenAAAAAElFTkSuQmCC) right repeat-y\
 }";
 */
-body.theme-solarized {
-  background-color: #00242f;
-  color: #aaa; }
-  body.theme-solarized .app-container .overlay {
-    background-color: rgba(0, 0, 0, 0.3); }
-  body.theme-solarized .app-container .layout .editor-grid .grid-layout.active {
-    background-image: linear-gradient(to right, #00242f 24px, transparent 1px), linear-gradient(to bottom, #00242f 24px, transparent 1px), linear-gradient(to right, #00212b 4px, transparent 1px), linear-gradient(to bottom, #00212b 4px, transparent 1px); }
-  body.theme-solarized .app-container .layout .editor-grid .preview-holder {
-    opacity: 0.03; }
-  body.theme-solarized .app-container .layout .editor-grid .editor-widget {
-    background-color: #002B36;
-    border-color: rgba(0, 0, 0, 0.25); }
-    body.theme-solarized .app-container .layout .editor-grid .editor-widget .header {
-      border-bottom-color: rgba(0, 0, 0, 0.1);
-      background-color: #0B3843; }
-      body.theme-solarized .app-container .layout .editor-grid .editor-widget .header .title .value, body.theme-solarized .app-container .layout .editor-grid .editor-widget .header .pull-right {
-        background-color: #0B3843; }
-      body.theme-solarized .app-container .layout .editor-grid .editor-widget .header .stripe {
-        border-bottom-color: rgba(170, 170, 170, 0.3); }
-      body.theme-solarized .app-container .layout .editor-grid .editor-widget .header .minimize-btn:hover, body.theme-solarized .app-container .layout .editor-grid .editor-widget .header .close-btn:hover {
-        color: #fff; }
 
-/*# sourceMappingURL=theme-solarized.css.map */
+// Color Palette
+$background-color: #00242f; // body background color
+$widget-background-color: #002B36; // background color for widgets
+$widget-header-color:  #0B3843; //rgba(19, 65, 75, 0.60); // background for widget header line
+$highlight-color:  #2B7E76;
+$grid-color: #00212b;
+$border-color: #222F29;
+$text-color: #aaa;
+
+
+body.theme-solarized {
+  background-color: $background-color;
+  color: $text-color;
+
+  .app-container {
+    .overlay {
+      background-color: rgba(0,0,0,0.3);
+    }
+    .layout {
+      .editor-grid {
+        .grid-layout.active {
+          background-image:
+            linear-gradient(to right, #{$background-color} 24px, transparent 1px),
+            linear-gradient(to bottom,  #{$background-color} 24px, transparent 1px),
+            linear-gradient(to right,  #{$grid-color} 4px, transparent 1px),
+            linear-gradient(to bottom,  #{$grid-color} 4px, transparent 1px);
+        }
+        .preview-holder {
+          opacity: 0.03;
+        }
+        .editor-widget {
+          background-color: $widget-background-color;
+          border-color: rgba(0,0,0,0.25);
+          .header {
+            border-bottom-color: rgba(0,0,0,0.1);
+            background-color: $widget-header-color;
+            .title .value, .pull-right { background-color: $widget-header-color; }
+            .stripe { border-bottom-color: rgba(170, 170, 170, 0.3); }
+            .minimize-btn:hover, .close-btn:hover { color: #fff; }
+          }
+        }
+      }
+    }
+  }
+}

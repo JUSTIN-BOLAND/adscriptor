@@ -1,0 +1,71 @@
+﻿
+@import 'helpers';
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: "HelveticaNeue","Helvetica Neue","HelveticaNeueRoman","HelveticaNeue-Roman","Helvetica Neue Roman","Helvetica","Tahoma","Geneva","Arial",sans-serif;
+  font-size: 16px;
+}
+
+.app-container {
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: none;
+  }
+  .layout {
+    padding: 18px;
+  }
+
+  .editor-grid {
+    .grid-layout {
+      margin: 0;
+      background-size: 42px 42px;
+      background-position: -33px -33px, -33px -33px, -2px -2px, -2px -2px;
+      .editor-widget {
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+        border-width: 3px;
+        border-style: solid;
+        padding: 3px;
+        .header {
+          border-bottom-width: 1px;
+          border-bottom-style: solid;
+          cursor: move;
+          font-size: 16px;
+          line-height: 21px;
+          height: 22px;
+          position: relative;
+          overflow: hidden;
+          .wrapper { position: relative; z-index: 1; }
+          .title {
+            @include ellipsize;
+            .value { padding: 0 6px; }
+          }
+          .close-btn { margin-left: 12px; }
+          .close-btn, .minimize-btn { line-height: 21px; cursor: pointer; }
+          .pull-right { padding: 0 6px; }
+          .striped {
+            position: absolute;
+            z-index: 0;
+            height: 10px;
+            width: 100%;
+            top: 5px;
+            left: 0;
+            .stripe {
+              height: 2px;
+              border-bottom-width: 1px;
+              border-bottom-style: dotted;
+            }
+            .offset { margin-left: 1px; }
+          }
+        }
+      }
+    }
+  }
+}

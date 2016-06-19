@@ -1,0 +1,22 @@
+﻿
+// Box-Sizing
+@mixin box-sizing($box-size) {
+  -webkit-box-sizing: $box-size;
+  -moz-box-sizing: $box-size;
+  box-sizing: $box-size;
+}
+
+// Vertical centering
+@mixin vcenter {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+// Text Ellipsis
+@mixin ellipsize {
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

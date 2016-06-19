@@ -5,7 +5,7 @@ var buf = [];
 var jade_mixins = {};
 var jade_interp;
 
-buf.push("<div class=\"app-container theme-solarized\"><div class=\"layout\"></div><div class=\"overlay\"></div></div>");;return buf.join("");
+buf.push("<div class=\"grid-layout\"></div>");;return buf.join("");
 }
 
 });
