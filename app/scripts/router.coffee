@@ -29,36 +29,4 @@
 
     editor: ->
       console.log 'routing'
-      @app.layout.layout.show new EditorGrid
-        collection: new Backbone.Collection([
-          name: 'foo'
-        ,
-          name: 'bar'
-        ])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      @app.layout.layout.show new EditorGrid()

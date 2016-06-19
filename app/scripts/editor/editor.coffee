@@ -17,26 +17,36 @@
     childViewContainer: '.grid-layout'
     className: 'editor-grid gridster'
 
+    initialize: ->
+      @collection = new Backbone.Collection([
+          name: 'foo bar the allmighty'
+          position:
+            x: 1
+            y: 1
+            width: 3
+            height: 2
+            collapsed: true
+        ,
+          name: 'bar foo baz this is fun'
+          position:
+            x: 4
+            y: 1
+            width: 3
+            height: 5
+            collapsed: false
+        ])
+      super
+
     collectionEvents:
       'change': 'render'
-
-    initialize: ->
-      super
-      console.log 'construct'
-      counter = 1
-      inter = setInterval =>
-        console.log 'timeout'
-        if counter < 5
-          counter++
-          @collection.add
-            name: "added #{Math.random().toFixed(4)}"
-          console.log @collection.length
-        else
-          clearInterval inter
-       , 1500
-
     ui: ->
       grid: '.grid-layout'
+
+    buildChildView: (item, ItemView) ->
+      console.log 'build'
+      new ItemView
+        model: item
+        editor: this
 
     onShow: ->
       @ui.grid.gridster
@@ -47,13 +57,22 @@
           enabled: true
           handle: '.drag-handle'
           start: => @ui.grid.addClass('active')
-          stop: => @ui.grid.removeClass('active')
+          stop: =>
+            @ui.grid.removeClass('active')
+            @gridster.serialize()
         resize:
           enabled: true
           start: => @ui.grid.addClass('active')
-          stop: => @ui.grid.removeClass('active')
+          stop: =>
+            @ui.grid.removeClass('active')
+            @gridster.serialize()
+        serialize_params: (elem, widget) =>
+          elem.data('view')?.trigger 'gridster:change',
+            x: widget.col
+            y: widget.row
+            width: widget.size_x
+            height: widget.size_y
       @gridster = @ui.grid.data('gridster')
-      console.log 'show'
 
     attachHtml: (collectionView, childView, index) ->
       super

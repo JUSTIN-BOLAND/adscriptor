@@ -88,8 +88,6 @@ body.theme-solarized {
   color: #aaa; }
   body.theme-solarized .app-container .overlay {
     background-color: rgba(0, 0, 0, 0.3); }
-  body.theme-solarized .app-container .layout .editor-grid .grid-layout.active {
-    background-image: linear-gradient(to right, #00242f 24px, transparent 1px), linear-gradient(to bottom, #00242f 24px, transparent 1px), linear-gradient(to right, #00212b 4px, transparent 1px), linear-gradient(to bottom, #00212b 4px, transparent 1px); }
   body.theme-solarized .app-container .layout .editor-grid .preview-holder {
     opacity: 0.03; }
   body.theme-solarized .app-container .layout .editor-grid .editor-widget {
@@ -102,7 +100,7 @@ body.theme-solarized {
         background-color: #0B3843; }
       body.theme-solarized .app-container .layout .editor-grid .editor-widget .header .stripe {
         border-bottom-color: rgba(170, 170, 170, 0.3); }
-      body.theme-solarized .app-container .layout .editor-grid .editor-widget .header .minimize-btn:hover, body.theme-solarized .app-container .layout .editor-grid .editor-widget .header .close-btn:hover {
+      body.theme-solarized .app-container .layout .editor-grid .editor-widget .header .minimize-btn-container:hover .minimize-btn, body.theme-solarized .app-container .layout .editor-grid .editor-widget .header .close-btn:hover {
         color: #fff; }
 
 /*# sourceMappingURL=theme-solarized.css.map */

@@ -1,4 +1,4 @@
-﻿/// <binding AfterBuild='compile' ProjectOpened='development' />
+﻿/// <binding ProjectOpened='development' />
 module.exports = function (grunt) {
   'use strict';
   grunt.initConfig({
@@ -59,6 +59,14 @@ module.exports = function (grunt) {
 
       }
     },
+    copy: {
+      svg: {
+        expand: true,
+        cwd: 'app/',
+        src: '**/*.svg',
+        dest: 'build/'
+      }
+    },
     watch: {
       jade: {
         files: 'app/**/*.jade',
@@ -77,6 +85,13 @@ module.exports = function (grunt) {
       sass: {
         files: 'app/**/*.scss',
         tasks: ['sass:watch_compile'],
+        options: {
+          spawn: false
+        }
+      },
+      svg: {
+        files: 'app/**/*.svg',
+        tasks: ['copy:svg'],
         options: {
           spawn: false
         }
@@ -105,8 +120,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
-  grunt.registerTask('compile', ['jade:compile', 'coffee:compile', 'sass:compile']);
+  grunt.registerTask('compile', ['jade:compile', 'coffee:compile', 'sass:compile', 'copy:svg']);
   grunt.registerTask('development', ['compile', 'watch']);
 
   grunt.registerTask('default', ['compile'])

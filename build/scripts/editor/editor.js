@@ -19,35 +19,47 @@
 
       EditorGrid.prototype.className = 'editor-grid gridster';
 
-      EditorGrid.prototype.collectionEvents = {
-        'change': 'render'
+      EditorGrid.prototype.initialize = function() {
+        this.collection = new Backbone.Collection([
+          {
+            name: 'foo bar the allmighty',
+            position: {
+              x: 1,
+              y: 1,
+              width: 3,
+              height: 2,
+              collapsed: true
+            }
+          }, {
+            name: 'bar foo baz this is fun',
+            position: {
+              x: 4,
+              y: 1,
+              width: 3,
+              height: 5,
+              collapsed: false
+            }
+          }
+        ]);
+        return EditorGrid.__super__.initialize.apply(this, arguments);
       };
 
-      EditorGrid.prototype.initialize = function() {
-        var counter, inter;
-        EditorGrid.__super__.initialize.apply(this, arguments);
-        console.log('construct');
-        counter = 1;
-        return inter = setInterval((function(_this) {
-          return function() {
-            console.log('timeout');
-            if (counter < 5) {
-              counter++;
-              _this.collection.add({
-                name: "added " + (Math.random().toFixed(4))
-              });
-              return console.log(_this.collection.length);
-            } else {
-              return clearInterval(inter);
-            }
-          };
-        })(this), 1500);
+      EditorGrid.prototype.collectionEvents = {
+        'change': 'render'
       };
 
       EditorGrid.prototype.ui = function() {
         return {
           grid: '.grid-layout'
         };
+      };
+
+      EditorGrid.prototype.buildChildView = function(item, ItemView) {
+        console.log('build');
+        return new ItemView({
+          model: item,
+          editor: this
+        });
       };
 
       EditorGrid.prototype.onShow = function() {
@@ -65,7 +77,8 @@
             })(this),
             stop: (function(_this) {
               return function() {
-                return _this.ui.grid.removeClass('active');
+                _this.ui.grid.removeClass('active');
+                return _this.gridster.serialize();
               };
             })(this)
           },
@@ -78,13 +91,24 @@
             })(this),
             stop: (function(_this) {
               return function() {
-                return _this.ui.grid.removeClass('active');
+                _this.ui.grid.removeClass('active');
+                return _this.gridster.serialize();
               };
             })(this)
-          }
+          },
+          serialize_params: (function(_this) {
+            return function(elem, widget) {
+              var ref;
+              return (ref = elem.data('view')) != null ? ref.trigger('gridster:change', {
+                x: widget.col,
+                y: widget.row,
+                width: widget.size_x,
+                height: widget.size_y
+              }) : void 0;
+            };
+          })(this)
         });
-        this.gridster = this.ui.grid.data('gridster');
-        return console.log('show');
+        return this.gridster = this.ui.grid.data('gridster');
       };
 
       EditorGrid.prototype.attachHtml = function(collectionView, childView, index) {

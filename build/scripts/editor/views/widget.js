@@ -15,23 +15,104 @@
 
       Widget.prototype.className = 'widget-wrapper';
 
+      Widget.prototype.initialize = function(options) {
+        this.editor = options.editor;
+        this.listenTo(this, 'gridster:change', this.onGridChange);
+        return Widget.__super__.initialize.apply(this, arguments);
+      };
+
       Widget.prototype.attributes = function() {
-        var ref, ref1, ref2, ref3;
         return {
-          'data-sizex': ((ref = this.model.get('position-data')) != null ? ref.width : void 0) || 1,
-          'data-sizey': ((ref1 = this.model.get('position-data')) != null ? ref1.height : void 0) || 1,
-          'data-row': ((ref2 = this.model.get('position-data')) != null ? ref2.x : void 0) || 1,
-          'data-col': ((ref3 = this.model.get('position-data')) != null ? ref3.y : void 0) || 1
+          'data-sizex': this.model.get('position').width,
+          'data-sizey': this.model.get('position').collapsed ? 1 : this.model.get('position').height,
+          'data-col': this.model.get('position').x,
+          'data-row': this.model.get('position').y
         };
       };
 
-      Widget.prototype.initialize = function() {
-        return console.log('widget init');
+      Widget.prototype.regions = function() {
+        return {
+          content: '.content'
+        };
       };
 
-      Widget.prototype.remove = function() {
-        console.log('widget destruct');
-        return Widget.__super__.remove.apply(this, arguments);
+      Widget.prototype.ui = function() {
+        return {
+          minimizeBtn: '.minimize-btn',
+          minimizeBtnContainer: '.minimize-btn-container'
+        };
+      };
+
+      Widget.prototype.events = function() {
+        return {
+          'click @ui.minimizeBtnContainer': function() {
+            return this.toggleWidget();
+          },
+          'click .close-btn': 'hideWidget'
+        };
+      };
+
+      Widget.prototype.onGridChange = function(widget) {
+        var position;
+        position = _.extend({}, this.model.get('position'));
+        if (position.collapsed) {
+          if (widget.height > 1) {
+            this.model.set('position', _.extend(position, widget));
+            return this.toggleWidget(false);
+          } else {
+            widget.height = position.height;
+            return this.model.set('position', _.extend(position, widget));
+          }
+        } else {
+          if (widget.height === 1) {
+            widget.height = position.height;
+            this.model.set('position', _.extend(position, widget));
+            return this.toggleWidget(false);
+          } else {
+            return this.model.set('position', _.extend(position, widget));
+          }
+        }
+      };
+
+      Widget.prototype.onRender = function() {
+        return this.$el.data('view', this);
+      };
+
+      Widget.prototype.toggleWidget = function(resize) {
+        var position;
+        if (resize == null) {
+          resize = true;
+        }
+        position = this.model.get('position');
+        if (position.collapsed) {
+          this.model.set('position', _.extend({}, position, {
+            collapsed: false
+          }));
+          if (resize) {
+            this.editor.gridster.resize_widget(this.$el, position.width, position.height);
+          }
+          this.ui.minimizeBtn.addClass('expanded');
+          return this.ui.minimizeBtnContainer.attr('title', 'Collapse');
+        } else {
+          this.model.set('position', _.extend({}, position, {
+            collapsed: true
+          }));
+          if (resize) {
+            this.editor.gridster.resize_widget(this.$el, position.width, 1);
+          }
+          this.ui.minimizeBtn.removeClass('expanded');
+          return this.ui.minimizeBtnContainer.attr('title', 'Expand');
+        }
+      };
+
+      Widget.prototype.hideWidget = function() {
+        this.$el.css('opacity', 0);
+        return setTimeout((function(_this) {
+          return function() {
+            console.log('timeout');
+            return _this.model.destroy();
+          };
+        })(this), 100);
       };
 
       return Widget;
