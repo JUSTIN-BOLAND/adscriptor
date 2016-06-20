@@ -1,11 +1,13 @@
 ﻿define [
   'backbone.marionette'
-  './templates/widget'
+  '../widget_factory'
+  './templates/widget_item'
 ], (
   Marionette
+  WidgetFactory
   template
 ) ->
-  class Widget extends Marionette.LayoutView
+  class WidgetItem extends Marionette.LayoutView
     template: template
     className: 'widget-wrapper'
 
@@ -19,6 +21,8 @@
       'data-sizey': if @model.get('collapsed') then 1 else @model.get('height')
       'data-col': @model.get('x')
       'data-row': @model.get('y')
+      'data-min-sizex': @model.get('minWidth')
+      'data-min-sizey': @model.get('minHeight')
     regions: ->
       content: '.content'
     ui: ->
@@ -31,31 +35,31 @@
     onGridChange: (widget) ->
       if @model.get 'collapsed'
         if widget.height > 1
-          @model.set widget
+          @model.save widget
           @toggleWidget false
         else
           widget.height = @model.get 'height'
-          @model.set widget
+          @model.save widget
       else
         if widget.height == 1
           widget.height = @model.get 'height'
-          @model.set widget
+          @model.save widget
           @toggleWidget false
         else
-          @model.set widget
+          @model.save widget
 
     onRender: ->
       @$el.data('view', this)
-      #TODO: @content.show
+      @content.show WidgetFactory.create @model.get('type'), [@model]
 
     toggleWidget: (resize = true) ->
       if @model.get 'collapsed'
-        @model.set collapsed: false
+        @model.save collapsed: false
         @editor.gridster.resize_widget @$el, @model.get('width'), @model.get('height') if resize
         @ui.minimizeBtn.addClass 'expanded'
         @ui.minimizeBtnContainer.attr 'title', 'Collapse'
       else
-        @model.set collapsed: true
+        @model.save collapsed: true
         @editor.gridster.resize_widget @$el, @model.get('width'), 1 if resize
         @ui.minimizeBtn.removeClass 'expanded'
         @ui.minimizeBtnContainer.attr 'title', 'Expand'

@@ -2,37 +2,27 @@
   'backbone'
   'backbone.marionette'
   'gridster'
-  './views/widget'
+  './widget_factory'
+  './collections/widgets'
+  './views/widget_item'
   './layout'
 ], (
   Backbone
   Marionette
   Gridster
-  Widget
+  WidgetFactory
+  Widgets
+  WidgetItem
   template
 ) ->
   class EditorGrid extends Marionette.CompositeView
     template: template
-    childView: Widget
+    childView: WidgetItem
     childViewContainer: '.grid-layout'
     className: 'editor-grid gridster'
 
     initialize: ->
-      @collection = new Backbone.Collection([
-          name: 'foo bar the allmighty'
-          x: 1
-          y: 1
-          width: 3
-          height: 2
-          collapsed: true
-        ,
-          name: 'bar foo baz this is fun'
-          x: 4
-          y: 1
-          width: 3
-          height: 5
-          collapsed: false
-        ])
+      @collection = new Widgets()
       super
 
     collectionEvents:
@@ -44,6 +34,21 @@
       new ItemView
         model: item
         editor: this
+
+    render: ->
+      @collection.fetch().done =>
+
+        @collection.create(WidgetFactory.getAttributesFor('menubar'))
+#        @collection.create({
+#          name: 'bar foo baz this is fun'
+#          x: 4
+#          y: 1
+#          width: 3
+#          height: 5
+#          collapsed: false
+#        })
+
+        super
 
     calcGridsterSize: ->
       height = $(window).height() - 36

@@ -1,6 +1,6 @@
 ﻿define [
   'marionette'
-  './editor/editor-grid'
+  './editor/editor_grid'
 ], (
   Marionette
   EditorGrid

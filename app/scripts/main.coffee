@@ -63,6 +63,8 @@ window.requireJS = require.config
       deps: ['backbone']
     'backbone.babysitter':
       deps: ['backbone']
+    'backbone.localstorage':
+      deps: ['backbone']
     bootstrap:
       deps: ['jquery']
     gridster:
@@ -78,6 +80,7 @@ window.requireJS = require.config
     'backbone.radio': '../../bower_components/backbone.radio/build/backbone.radio'
     'backbone.wreqr': '../../bower_components/backbone.wreqr/lib/backbone.wreqr'
     'backbone.marionette': '../../bower_components/backbone.marionette/lib/backbone.marionette'
+    'backbone.localstorage': '../../bower_components/backbone.localStorage/backbone.localStorage'
     jade: '../../bower_components/jade/runtime'
     gridster: '../../bower_components/gridster/dist/jquery.gridster'
     bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap'
