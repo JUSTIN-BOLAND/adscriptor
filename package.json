@@ -9,6 +9,8 @@
     "url": "https://github.com/crealytics/adscriptor"
   },
   "devDependencies": {
+  },
+  "dependencies": {
     "bower": "^1.7.9",
     "grunt": "^1.0.1",
     "grunt-contrib-coffee": "^1.0.0",
@@ -16,7 +18,5 @@
     "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-contrib-copy": "^1.0.0"
-  },
-  "dependencies": {
   }
 }
