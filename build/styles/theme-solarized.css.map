@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EAoFE;AAYF,oBAAqB;EACnB,gBAAgB,EAVC,OAAO;EAWxB,KAAK,EALM,IAAI;EAQb,4CAAS;IACP,gBAAgB,EAAE,kBAAe;EAI/B,wEAAgB;IAAE,OAAO,EAAE,IAAI;EAC/B,uEAAe;IACb,gBAAgB,EApBA,OAAO;IAqBvB,YAAY,EAAE,mBAAgB;IAC9B,+EAAQ;MACN,mBAAmB,EAAE,kBAAe;MACpC,gBAAgB,EAvBL,OAAO;MAwBlB,0LAA2B;QAAE,gBAAgB,EAxBlC,OAAO;MAyBlB,uFAAQ;QAAE,mBAAmB,EAAE,wBAAwB;MACvD,6NAA8D;QAAE,KAAK,EAAE,IAAI",
-"sources": ["../../app/styles/theme-solarized.scss"],
-"names": [],
-"file": "theme-solarized.css"
-}
