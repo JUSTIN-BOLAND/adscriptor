@@ -8,8 +8,8 @@
       .drag-handle.stripe
     .drag-handle.wrapper
       .drag-handle.pull-right
-        span.minimize-btn-container(title=position.collapsed ? 'Expand' : 'Collapse')
-          span.fa.fa-caret-left.minimize-btn(class=position.collapsed ? undefined : 'expanded')
+        span.minimize-btn-container(title=collapsed ? 'Expand' : 'Collapse')
+          span.fa.fa-caret-left.minimize-btn(class=collapsed ? undefined : 'expanded')
         span.fa.fa-times.close-btn(title="Close")
       .drag-handle.title
         span.drag-handle.value=name

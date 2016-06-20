@@ -1,6 +1,6 @@
 ﻿define [
   'marionette'
-  './editor/editor'
+  './editor/editor-grid'
 ], (
   Marionette
   EditorGrid
@@ -28,5 +28,4 @@
       #@app.layout.content.show new Marionette.ItemView()
 
     editor: ->
-      console.log 'routing'
       @app.layout.layout.show new EditorGrid()

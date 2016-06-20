@@ -15,10 +15,10 @@
       super
 
     attributes: ->
-      'data-sizex':  @model.get('position').width
-      'data-sizey': if @model.get('position').collapsed then 1 else @model.get('position').height
-      'data-col': @model.get('position').x
-      'data-row': @model.get('position').y
+      'data-sizex':  @model.get('width')
+      'data-sizey': if @model.get('collapsed') then 1 else @model.get('height')
+      'data-col': @model.get('x')
+      'data-row': @model.get('y')
     regions: ->
       content: '.content'
     ui: ->
@@ -29,36 +29,34 @@
       'click .close-btn': 'hideWidget'
 
     onGridChange: (widget) ->
-      position = _.extend {}, @model.get('position')
-      if position.collapsed
+      if @model.get 'collapsed'
         if widget.height > 1
-          @model.set 'position', _.extend(position, widget)
-          @toggleWidget(false)
+          @model.set widget
+          @toggleWidget false
         else
-          widget.height = position.height
-          @model.set 'position', _.extend(position, widget)
+          widget.height = @model.get 'height'
+          @model.set widget
       else
         if widget.height == 1
-          widget.height = position.height
-          @model.set 'position', _.extend(position, widget)
-          @toggleWidget(false)
+          widget.height = @model.get 'height'
+          @model.set widget
+          @toggleWidget false
         else
-          @model.set 'position', _.extend(position, widget)
+          @model.set widget
 
     onRender: ->
       @$el.data('view', this)
       #TODO: @content.show
 
     toggleWidget: (resize = true) ->
-      position = @model.get 'position'
-      if position.collapsed
-        @model.set 'position', _.extend({}, position, collapsed: false)
-        @editor.gridster.resize_widget @$el, position.width, position.height if resize
+      if @model.get 'collapsed'
+        @model.set collapsed: false
+        @editor.gridster.resize_widget @$el, @model.get('width'), @model.get('height') if resize
         @ui.minimizeBtn.addClass 'expanded'
         @ui.minimizeBtnContainer.attr 'title', 'Collapse'
       else
-        @model.set 'position', _.extend({}, position, collapsed: true)
-        @editor.gridster.resize_widget @$el, position.width, 1 if resize
+        @model.set collapsed: true
+        @editor.gridster.resize_widget @$el, @model.get('width'), 1 if resize
         @ui.minimizeBtn.removeClass 'expanded'
         @ui.minimizeBtnContainer.attr 'title', 'Expand'
 
