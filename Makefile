@@ -2,9 +2,7 @@ default: compile distribute
 
 # compiles all source files
 compile:
-	grunt coffee:compile
-	grunt jade:compile
-	grunt sass:compile
+	grunt compile
 
 # install all dependencies to run
 install:
@@ -15,8 +13,8 @@ install:
 	bower install
 
 # watches all files and recompiles them on change
-watch: compile
-	grunt watch
+development:
+	grunt development
 
 # Copies the final page into the dist/ folder
 distribute:
