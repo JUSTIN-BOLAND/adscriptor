@@ -4,9 +4,6 @@
   MenuBar
 ) ->
   class WidgetFactory
-    @_createInstance: (construct, args) ->
-      new (Function::bind.apply(construct, args))()
-
     @_getClassForType: (type) ->
       switch type
         when undefined, 'menubar' then MenuBar
@@ -21,11 +18,14 @@
       width: 1
       minWidth: 1
       minHeight: 1
+      maxWidth: null
+      maxHeight: null
       collapsed: false
 
-    @create: (widgetType, params) ->
+    @create: (widgetType, options) ->
       # Instanciates the given Widget Type with the given parameters
-      @_createInstance @_getClassForType(widgetType), params
+      cls = @_getClassForType(widgetType)
+      new cls(options)
 
     @getAttributesFor: (widgetType) ->
       # Creates an attribute set for the specified widget type

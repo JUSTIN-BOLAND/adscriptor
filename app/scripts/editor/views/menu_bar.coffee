@@ -15,3 +15,20 @@
       minHeight: 1
     template: template
     className: 'wrapper'
+
+    initialize: (options) ->
+      super
+      @editor = options.editor
+
+    events: ->
+      'click .menu-action': 'onMenuAction'
+
+    onMenuAction: (e) ->
+      e.preventDefault()
+      category = $(e.target).data('menuCategory')
+      value = $(e.target).data('menuValue')
+      switch category
+        when 'layout' then @_changeLayout value
+
+    _changeLayout: (newLayout) ->
+      @editor.layoutManager.applyLayout(newLayout)

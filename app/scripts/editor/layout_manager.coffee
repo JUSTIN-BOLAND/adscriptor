@@ -9,6 +9,7 @@
     initialize: (options) ->
       @gridSize = options.gridSize
       @collection = options.collection
+      @editor = options.editor
 
     applyLayout: (layoutName = 'default') ->
       switch layoutName
@@ -17,7 +18,9 @@
         else throw new Error("Can't apply Layout \"#{layoutName}\", unknown layout name.")
 
     _setLayout: (newLayout) ->
-      @collection.reset(newLayout)
+      @editor.destroyAllWidgets()
+      _.invoke @collection.toArray(), 'destroy'
+      @collection.create widget for widget in newLayout
 
     _defaultLayout: ->
       layout = []

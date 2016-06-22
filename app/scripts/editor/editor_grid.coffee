@@ -44,6 +44,7 @@
         @layoutManager = new LayoutManager
           collection: @collection
           gridSize: @gridSize
+          editor: this
         # Apply default layout in case we don't have any widgets
         @layoutManager.applyLayout() if @collection.length == 0
         super
@@ -94,9 +95,17 @@
     onShow: ->
       @_initializeGridster()
 
+
+    destroyAllWidgets: ->
+      # This is needed for the layout manager since destroying widgets
+      # too fast throws exceptions (gridster, i'm looking at you...)
+      # Simply removes all widgets before detaching them, what should go wrong?
+      @gridster.remove_all_widgets()
+
     attachHtml: (collectionView, childView, index) ->
       super
-      @gridster.add_widget(childView.$el) if @gridster?
+      m = childView.model
+      @gridster.add_widget(childView.$el, m.get('width'), m.get('height'), m.get('x'), m.get('y'), [m.get('maxWidth'), m.get('maxHeight')], [m.get('minWidth'), m.get('minHeight')]) if @gridster?
 
     removeChildView: (childView) ->
       @gridster.remove_widget(childView.$el) if @gridster?

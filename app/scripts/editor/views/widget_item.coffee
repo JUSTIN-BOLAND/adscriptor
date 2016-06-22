@@ -23,6 +23,8 @@
       'data-row': @model.get('y')
       'data-min-sizex': @model.get('minWidth')
       'data-min-sizey': @model.get('minHeight')
+      'data-max-sizex': @model.get('maxWidth')
+      'data-max-sizey': @model.get('maxHeight')
     regions: ->
       content: '.content'
     ui: ->
@@ -54,7 +56,9 @@
       # Add Widget-Specific Classes to allow custom styling for widgets
       @$el.addClass("widget-#{@model.get('type')}")
       @ui.content.addClass("content-#{@model.get('type')}")
-      @content.show WidgetFactory.create @model.get('type'), [@model]
+      @content.show WidgetFactory.create @model.get('type'),
+        model: @model
+        editor: @editor
 
     toggleWidget: (resize = true) ->
       if @model.get 'collapsed'
@@ -74,7 +78,6 @@
 
     hideWidget: ->
       @$el.css('opacity', 0)
-      setTimeout =>
-        console.log 'timeout'
+      _.delay =>
         @model.destroy()
       , 100
