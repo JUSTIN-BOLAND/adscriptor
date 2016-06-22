@@ -27,6 +27,7 @@
 
     collectionEvents:
       'change': 'render'
+
     ui:
       grid: '.grid-layout'
 
@@ -37,17 +38,8 @@
 
     render: ->
       @collection.fetch().done =>
-
+        #TODO: remove this
         @collection.create(WidgetFactory.getAttributesFor('menubar'))
-#        @collection.create({
-#          name: 'bar foo baz this is fun'
-#          x: 4
-#          y: 1
-#          width: 3
-#          height: 5
-#          collapsed: false
-#        })
-
         super
 
     calcGridsterSize: ->
@@ -58,7 +50,7 @@
         rows: Math.floor height / 42
       }
 
-    onShow: ->
+    initializeGridster: ->
       @gridSize = @calcGridsterSize()
       @ui.grid.css 'min-height': (@gridSize.rows * 42), 'min-width': (@gridSize.cols * 42)
 
@@ -72,9 +64,13 @@
           enabled: true
           handle: '.drag-handle'
           start: => @ui.grid.addClass('active')
-          stop: =>
+          stop: _.compose =>
             @ui.grid.removeClass('active')
             @gridster.serialize()
+          , ->
+            # reset the player-revert after transition, so our menu isn't hiden behind the old player...
+            player = @$player
+            player.one 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', -> player.removeClass('player-revert')
         resize:
           enabled: true
           start: => @ui.grid.addClass('active')
@@ -89,6 +85,9 @@
             height: widget.size_y
       @gridster = @ui.grid.data('gridster')
       console.log @gridster
+
+    onShow: ->
+      @initializeGridster()
 
     attachHtml: (collectionView, childView, index) ->
       super

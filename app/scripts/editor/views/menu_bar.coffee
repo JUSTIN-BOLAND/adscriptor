@@ -10,7 +10,8 @@
       # Default Widget Attributes for a MenuBar
       name: 'AdScriptor v2.0.1'
       height: 2
-      width: 8
-      minWidth: 8
-      minHeight: 2
+      width: 14
+      minWidth: 1
+      minHeight: 1
     template: template
+    className: 'wrapper'

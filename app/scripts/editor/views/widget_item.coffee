@@ -28,6 +28,7 @@
     ui: ->
       minimizeBtn: '.minimize-btn'
       minimizeBtnContainer: '.minimize-btn-container'
+      content: '.content'
     events: ->
       'click @ui.minimizeBtnContainer': -> @toggleWidget()
       'click .close-btn': 'hideWidget'
@@ -50,16 +51,23 @@
 
     onRender: ->
       @$el.data('view', this)
+      # Add Widget-Specific Classes to allow custom styling for widgets
+      @$el.addClass("widget-#{@model.get('type')}")
+      @ui.content.addClass("content-#{@model.get('type')}")
       @content.show WidgetFactory.create @model.get('type'), [@model]
 
     toggleWidget: (resize = true) ->
       if @model.get 'collapsed'
         @model.save collapsed: false
+        @ui.content.css 'overflow', 'hidden'
+        @ui.content.fadeIn => @ui.content.css 'overflow', ''
         @editor.gridster.resize_widget @$el, @model.get('width'), @model.get('height') if resize
         @ui.minimizeBtn.addClass 'expanded'
         @ui.minimizeBtnContainer.attr 'title', 'Collapse'
       else
         @model.save collapsed: true
+        @ui.content.css 'overflow', 'hidden'
+        @ui.content.fadeOut => @ui.content.css 'overflow', ''
         @editor.gridster.resize_widget @$el, @model.get('width'), 1 if resize
         @ui.minimizeBtn.removeClass 'expanded'
         @ui.minimizeBtnContainer.attr 'title', 'Expand'
