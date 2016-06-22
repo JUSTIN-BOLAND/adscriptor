@@ -1,0 +1,23 @@
+﻿
+@import 'helpers';
+
+.editor-grid {
+  .widget-menubar {
+    z-index: 3;
+    .content-menubar {
+      overflow: visible;
+      .wrapper {
+        @include flex;
+        @include flex-direction(row);
+        @include flex-wrap(wrap);
+        justify-content: center;
+        align-items: center;
+        @include align-content(center);
+        height: 100%;
+        .menu-entry {
+          padding: 0 9px;
+        }
+      }
+    }
+  }
+}

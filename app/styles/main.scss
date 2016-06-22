@@ -36,69 +36,69 @@ html, body {
       margin: 0;
       background-size: 42px 42px;
       background-position: 0 0;
-      .editor-widget {
-        height: 100%;
-        width: 100%;
-        overflow: auto;
-        border-width: 3px;
-        border-style: solid;
-        padding: 3px;
-        .header {
-          border-bottom-width: 1px;
-          border-bottom-style: solid;
-          cursor: move;
-          font-size: 16px;
-          line-height: 21px;
-          height: 22px;
-          position: relative;
-          overflow: hidden;
-          .wrapper { position: relative; z-index: 1; }
-          .title {
-            @include ellipsize;
-            .value { padding: 0 12px 0 6px; }
-          }
-          .minimize-btn-container { margin-left: 6px; }
-          .close-btn, .minimize-btn-container {
-            text-align: center;
-            line-height: 21px;
-            cursor: pointer;
-            width: 21px;
-            height: 22px;
-            border-bottom: 1px solid transparent;
-            display: inline-block;
-          }
-          .minimize-btn {
-            line-height: 21px;
-            @include transition(-webkit-transform linear 0.3s);
-            @include transition(-ms-transform linear 0.3s);
-            @include transition(-o-transform linear 0.3s);
-            @include transition(-moz-transform linear 0.3s);
-            @include transition(transform linear 0.3s);
-            @include transform(rotate(0deg));
-          }
-          .minimize-btn.expanded {
-            @include transform(rotate(-90deg));
-          }
-          .striped {
-            position: absolute;
-            z-index: 0;
-            height: 10px;
-            width: 100%;
-            top: 5px;
-            left: 0;
-            .stripe {
-              height: 2px;
-              border-bottom-width: 1px;
-              border-bottom-style: dotted;
-            }
-            .offset { margin-left: 1px; }
-          }
-        }
-        .content {
-          width: 100%;
-          height: calc(100% - 22px);
-        }
+    }
+    .editor-widget {
+      height: 100%;
+      width: 100%;
+      border-width: 3px;
+      border-style: solid;
+      padding: 3px;
+    }
+    .header {
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      cursor: move;
+      font-size: 16px;
+      line-height: 21px;
+      height: 22px;
+      position: relative;
+      overflow: hidden;
+      .wrapper { position: relative; z-index: 1; }
+      .title {
+        @include ellipsize;
+        .value { padding: 0 12px 0 6px; }
       }
+      .minimize-btn-container { margin-left: 6px; }
+      .close-btn, .minimize-btn-container {
+        text-align: center;
+        line-height: 21px;
+        cursor: pointer;
+        width: 21px;
+        height: 22px;
+        border-bottom: 1px solid transparent;
+        display: inline-block;
+      }
+      .minimize-btn {
+        line-height: 21px;
+        @include transition(-webkit-transform linear 0.3s);
+        @include transition(-ms-transform linear 0.3s);
+        @include transition(-o-transform linear 0.3s);
+        @include transition(-moz-transform linear 0.3s);
+        @include transition(transform linear 0.3s);
+        @include transform(rotate(0deg));
+      }
+      .minimize-btn.expanded {
+        @include transform(rotate(-90deg));
+      }
+      .striped {
+        position: absolute;
+        z-index: 0;
+        height: 10px;
+        width: 100%;
+        top: 5px;
+        left: 0;
+        .stripe {
+          height: 2px;
+          border-bottom-width: 1px;
+          border-bottom-style: dotted;
+        }
+        .offset { margin-left: 1px; }
+      }
+    }
+    .content {
+      width: 100%;
+      height: calc(100% - 22px);
+      overflow: auto;
     }
   }
 }

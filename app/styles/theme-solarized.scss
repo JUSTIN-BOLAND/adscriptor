@@ -1,97 +1,13 @@
-﻿/*
-exports.isDark = true;
-exports.cssClass = "ace-solarized-dark";
-exports.cssText = ".ace-solarized-dark .ace_gutter {\
-background: #01313f;\
-color: #d0edf7\
-}\
-.ace-solarized-dark .ace_print-margin {\
-width: 1px;\
-background: #33555E\
-}\
-.ace-solarized-dark {\
-background-color: #002B36;\
-color: #93A1A1\
-}\
-.ace-solarized-dark .ace_entity.ace_other.ace_attribute-name,\
-.ace-solarized-dark .ace_storage {\
-color: #93A1A1\
-}\
-.ace-solarized-dark .ace_cursor,\
-.ace-solarized-dark .ace_string.ace_regexp {\
-color: #D30102\
-}\
-.ace-solarized-dark .ace_marker-layer .ace_active-line,\
-.ace-solarized-dark .ace_marker-layer .ace_selection {\
-background: rgba(255, 255, 255, 0.1)\
-}\
-.ace-solarized-dark.ace_multiselect .ace_selection.ace_start {\
-box-shadow: 0 0 3px 0px #002B36;\
-border-radius: 2px\
-}\
-.ace-solarized-dark .ace_marker-layer .ace_step {\
-background: rgb(102, 82, 0)\
-}\
-.ace-solarized-dark .ace_marker-layer .ace_bracket {\
-margin: -1px 0 0 -1px;\
-border: 1px solid rgba(147, 161, 161, 0.50)\
-}\
-.ace-solarized-dark .ace_gutter-active-line {\
-background-color: #0d3440\
-}\
-.ace-solarized-dark .ace_marker-layer .ace_selected-word {\
-border: 1px solid #073642\
-}\
-.ace-solarized-dark .ace_invisible {\
-color: rgba(147, 161, 161, 0.50)\
-}\
-.ace-solarized-dark .ace_keyword,\
-.ace-solarized-dark .ace_meta,\
-.ace-solarized-dark .ace_support.ace_class,\
-.ace-solarized-dark .ace_support.ace_type {\
-color: #859900\
-}\
-.ace-solarized-dark .ace_constant.ace_character,\
-.ace-solarized-dark .ace_constant.ace_other {\
-color: #CB4B16\
-}\
-.ace-solarized-dark .ace_constant.ace_language {\
-color: #B58900\
-}\
-.ace-solarized-dark .ace_constant.ace_numeric {\
-color: #D33682\
-}\
-.ace-solarized-dark .ace_fold {\
-background-color: #268BD2;\
-border-color: #93A1A1\
-}\
-.ace-solarized-dark .ace_entity.ace_name.ace_function,\
-.ace-solarized-dark .ace_entity.ace_name.ace_tag,\
-.ace-solarized-dark .ace_support.ace_function,\
-.ace-solarized-dark .ace_variable,\
-.ace-solarized-dark .ace_variable.ace_language {\
-color: #268BD2\
-}\
-.ace-solarized-dark .ace_string {\
-color: #2AA198\
-}\
-.ace-solarized-dark .ace_comment {\
-font-style: italic;\
-color: #657B83\
-}\
-.ace-solarized-dark .ace_indent-guide {\
-background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNg0Db1ZVCxc/sPAAd4AlUHlLenAAAAAElFTkSuQmCC) right repeat-y\
-}";
-*/
-
-// Color Palette
+﻿// Color Palette
 $background-color: #00242f; // body background color
-$widget-background-color: #002B36; // background color for widgets
-$widget-header-color:  #0B3843; //rgba(19, 65, 75, 0.60); // background for widget header line
-$highlight-color:  #2B7E76;
-$grid-color: #00212b;
-$border-color: #222F29;
-$text-color: #aaa;
+$foreground-color: #002B36; // offset color for foreground elements
+$highlight-background-color:  #0B3843; // used to highlight actions, e.g. hover, focus
+$highlight-foreground-color:  #2B7E76; // used to highlight special actions, e.g. Save Buttons
+
+$separator-color: #00212b; // Used for borders, separators, etc..
+
+$text-color: #aaa; // Default text color
+$text-highlight-color: #fff; // highlighted text color (hover, etc..)
 
 
 body.theme-solarized {
@@ -99,23 +15,47 @@ body.theme-solarized {
   color: $text-color;
 
   .app-container {
+    .btn.btn-default {
+      background: transparent;
+      text-shadow: none;
+      border-color: $background-color;
+      color: $text-color;
+      box-shadow: inset 0 1px 0 rgba(255, 254, 255, 0.025), 0 1px 1px rgba(0, 0, 0, .015);
+    }
+    .btn:focus, .btn:hover {
+      color: #fff;
+    }
+    .btn.btn-default:focus { box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125); }
+    .dropdown-menu { background-color: $foreground-color; }
+    .dropdown-menu > li > a { color: $text-color; }
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus { background: $highlight-background-color; color: $text-highlight-color; }
+    .dropdown-submenu > a:after { border-left-color: $text-color; }
+    .dropdown-submenu:hover > a:after, .dropdown-submenu:focus > a:after { border-left-color: $text-highlight-color; }
+    li.divider {
+      background-color: $separator-color;
+    }
+
     .overlay {
       background-color: rgba(0,0,0,0.3);
     }
+
     .layout {
       .editor-grid {
         .preview-holder { opacity: 0.03; }
         .editor-widget {
-          background-color: $widget-background-color;
-          border-color: rgba(0,0,0,0.25);
+          background-color: $foreground-color;
+          border-color: $separator-color;
           .header {
             border-bottom-color: rgba(0,0,0,0.1);
-            background-color: $widget-header-color;
-            .title .value, .pull-right { background-color: $widget-header-color; }
+            background-color: $highlight-background-color;
+            .title .value, .pull-right { background-color: $highlight-background-color; }
             .stripe { border-bottom-color: rgba(170, 170, 170, 0.3); }
-            .minimize-btn-container:hover .minimize-btn, .close-btn:hover { color: #fff; }
+            .minimize-btn-container:hover .minimize-btn, .close-btn:hover { color: $text-highlight-color; }
           }
         }
+      }
+      .content-menubar {
+
       }
     }
   }
