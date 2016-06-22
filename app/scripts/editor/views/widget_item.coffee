@@ -60,14 +60,14 @@
       if @model.get 'collapsed'
         @model.save collapsed: false
         @ui.content.css 'overflow', 'hidden'
-        @ui.content.fadeIn => @ui.content.css 'overflow', ''
+        @ui.content.stop(true, false).fadeIn => @ui.content.css 'overflow', ''
         @editor.gridster.resize_widget @$el, @model.get('width'), @model.get('height') if resize
         @ui.minimizeBtn.addClass 'expanded'
         @ui.minimizeBtnContainer.attr 'title', 'Collapse'
       else
         @model.save collapsed: true
         @ui.content.css 'overflow', 'hidden'
-        @ui.content.fadeOut => @ui.content.css 'overflow', ''
+        @ui.content.stop(true, false).fadeOut => @ui.content.css 'overflow', ''
         @editor.gridster.resize_widget @$el, @model.get('width'), 1 if resize
         @ui.minimizeBtn.removeClass 'expanded'
         @ui.minimizeBtnContainer.attr 'title', 'Expand'

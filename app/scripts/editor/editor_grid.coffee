@@ -5,6 +5,7 @@
   './widget_factory'
   './collections/widgets'
   './views/widget_item'
+  './layout_manager'
   './layout'
 ], (
   Backbone
@@ -13,6 +14,7 @@
   WidgetFactory
   Widgets
   WidgetItem
+  LayoutManager
   template
 ) ->
   class EditorGrid extends Marionette.CompositeView
@@ -23,6 +25,7 @@
 
     initialize: ->
       @collection = new Widgets()
+      @gridSize = @_calcGridsterSize()
       super
 
     collectionEvents:
@@ -38,11 +41,14 @@
 
     render: ->
       @collection.fetch().done =>
-        #TODO: remove this
-        @collection.create(WidgetFactory.getAttributesFor('menubar'))
+        @layoutManager = new LayoutManager
+          collection: @collection
+          gridSize: @gridSize
+        # Apply default layout in case we don't have any widgets
+        @layoutManager.applyLayout() if @collection.length == 0
         super
 
-    calcGridsterSize: ->
+    _calcGridsterSize: ->
       height = $(window).height() - 36
       width = $(window).width() - 36
       {
@@ -50,8 +56,7 @@
         rows: Math.floor height / 42
       }
 
-    initializeGridster: ->
-      @gridSize = @calcGridsterSize()
+    _initializeGridster: ->
       @ui.grid.css 'min-height': (@gridSize.rows * 42), 'min-width': (@gridSize.cols * 42)
 
       @ui.grid.gridster
@@ -68,7 +73,7 @@
             @ui.grid.removeClass('active')
             @gridster.serialize()
           , ->
-            # reset the player-revert after transition, so our menu isn't hiden behind the old player...
+            # reset the player-revert after transition, so our menu isn't hidden behind the old player...
             player = @$player
             player.one 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', -> player.removeClass('player-revert')
         resize:
@@ -87,7 +92,7 @@
       console.log @gridster
 
     onShow: ->
-      @initializeGridster()
+      @_initializeGridster()
 
     attachHtml: (collectionView, childView, index) ->
       super
