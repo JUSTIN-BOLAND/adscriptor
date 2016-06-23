@@ -105,8 +105,14 @@
     attachHtml: (collectionView, childView, index) ->
       super
       m = childView.model
-      @gridster.add_widget(childView.$el, m.get('width'), m.get('height'), m.get('x'), m.get('y'), [m.get('maxWidth'), m.get('maxHeight')], [m.get('minWidth'), m.get('minHeight')]) if @gridster?
+      @gridster.add_widget(childView.$el, m.get('width'), (if m.get('collapsed') then 1 else m.get('height')), m.get('x'), m.get('y'), [m.get('maxWidth'), m.get('maxHeight')], [m.get('minWidth'), m.get('minHeight')]) if @gridster?
 
     removeChildView: (childView) ->
+      # Make sure we always have at least 1 menu bar
+      if childView.model.get('type') == 'menubar' and @collection.where(type: 'menubar').length <= 0
+        attrs = WidgetFactory.getAttributesFor 'menubar'
+        attrs = childView.model.pick(_.keys(attrs)...)
+        @collection.create attrs
+      # continue removing
       @gridster.remove_widget(childView.$el) if @gridster?
       super

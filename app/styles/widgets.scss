@@ -6,6 +6,7 @@
     z-index: 3;
     .content-menubar {
       overflow: visible;
+      height: calc(100% - 19px);
       .wrapper {
         @include flex;
         @include flex-direction(row);
