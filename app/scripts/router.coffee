@@ -1,8 +1,10 @@
 ﻿define [
   'marionette'
+  './configuration'
   './editor/editor_grid'
 ], (
   Marionette
+  Configuration
   EditorGrid
 ) ->
   class AppRouter extends Marionette.AppRouter
@@ -17,15 +19,19 @@
       super
 
     index: ->
-      Configuration =
-        isConfigured: -> true
       unless Configuration.isConfigured()
         @navigate('configuration', trigger: true)
       else
         @navigate('editor', trigger: true)
 
     configuration: ->
-      #@app.layout.content.show new Marionette.ItemView()
+      if not Configuration.isConfigured()
+        #@app.layout.content.show new Marionette.ItemView()
+      else
+        @index()
 
     editor: ->
-      @app.layout.layout.show new EditorGrid()
+      if Configuration.isConfigured()
+        @app.layout.layout.show new EditorGrid()
+      else
+        @index()
