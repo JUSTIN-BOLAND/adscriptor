@@ -26,10 +26,8 @@
     initialize: ->
       @collection = new Widgets()
       @gridSize = @_calcGridsterSize()
+      @isClearing = false
       super
-
-    collectionEvents:
-      'change': 'render'
 
     ui:
       grid: '.grid-layout'
@@ -101,6 +99,9 @@
       # too fast throws exceptions (gridster, i'm looking at you...)
       # Simply removes all widgets before detaching them, what should go wrong?
       @gridster?.remove_all_widgets()
+      @isClearing = true
+      _.invoke @collection.toArray(), 'destroy'
+      @isClearing = false
 
     attachHtml: (collectionView, childView, index) ->
       super
@@ -108,8 +109,9 @@
       @gridster.add_widget(childView.$el, m.get('width'), (if m.get('collapsed') then 1 else m.get('height')), m.get('x'), m.get('y'), [m.get('maxWidth'), m.get('maxHeight')], [m.get('minWidth'), m.get('minHeight')]) if @gridster?
 
     removeChildView: (childView) ->
-      # Make sure we always have at least 1 menu bar
-      if childView.model.get('type') == 'menubar' and @collection.where(type: 'menubar').length <= 0
+      # check if its the menu-bar.
+      # there must always be a menu-bar.
+      if not @isClearing and childView.model.get('type') == 'menubar' and @collection.where(type: 'menubar').length <= 0
         attrs = WidgetFactory.getAttributesFor 'menubar'
         attrs = childView.model.pick(_.keys(attrs)...)
         @collection.create attrs

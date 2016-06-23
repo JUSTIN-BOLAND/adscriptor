@@ -19,7 +19,6 @@
 
     _setLayout: (newLayout) ->
       @editor.destroyAllWidgets()
-      _.invoke @collection.toArray(), 'destroy'
       @collection.create widget for widget in newLayout
 
     _defaultLayout: ->
