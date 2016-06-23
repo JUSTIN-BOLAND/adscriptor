@@ -25,7 +25,7 @@
     _defaultLayout: ->
       layout = []
       # Menubar
-      menubar = WidgetFactory.getAttributesFor('menubar')
+      menubar = WidgetFactory.getAttributesFor 'menubar'
       _.extend menubar,
         x: 1
         y: 1
@@ -34,7 +34,7 @@
       layout.push menubar
       # Project Explorer
       projectExplorerWidth = Math.min 5, Math.floor(@gridSize.cols / 5)
-      projectExplorer = WidgetFactory.getAttributesFor('menubar')
+      projectExplorer = WidgetFactory.getAttributesFor 'menubar'
       _.extend projectExplorer,
         x: 1
         y: 3

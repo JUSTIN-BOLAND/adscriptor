@@ -29,6 +29,13 @@
       value = $(e.target).data('menuValue')
       switch category
         when 'layout' then @_changeLayout value
+        when 'addwindow' then @_addWindow value
 
     _changeLayout: (newLayout) ->
       @editor.layoutManager.applyLayout(newLayout)
+
+    _addWindow: (windowType) ->
+      requireJS ['editor/widget_factory'], (WidgetFactory) =>
+        attrs = WidgetFactory.getAttributesFor windowType
+        attrs.y = 10000 # Forces the new Window to the bottom
+        @editor.collection.create attrs

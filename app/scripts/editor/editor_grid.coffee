@@ -100,7 +100,7 @@
       # This is needed for the layout manager since destroying widgets
       # too fast throws exceptions (gridster, i'm looking at you...)
       # Simply removes all widgets before detaching them, what should go wrong?
-      @gridster.remove_all_widgets()
+      @gridster?.remove_all_widgets()
 
     attachHtml: (collectionView, childView, index) ->
       super
