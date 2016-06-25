@@ -21,9 +21,7 @@
       overlay: '.overlay'
 
     onRender: ->
-      theTheme = Configuration.get('theme')
-      theTheme = @themes[0] unless theTheme?
-      @setTheme theTheme
+      @setTheme Configuration.get('theme') or @themes[0]
 
     setTheme: (newTheme) ->
       if newTheme in @themes

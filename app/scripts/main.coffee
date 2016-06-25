@@ -65,6 +65,8 @@ window.requireJS = require.config
       deps: ['backbone']
     'backbone.localstorage':
       deps: ['backbone']
+    'backbone.deepmodel':
+      deps: ['backbone']
     bootstrap:
       deps: ['jquery']
     gridster:
@@ -81,6 +83,7 @@ window.requireJS = require.config
     'backbone.wreqr': '../../bower_components/backbone.wreqr/lib/backbone.wreqr'
     'backbone.marionette': '../../bower_components/backbone.marionette/lib/backbone.marionette'
     'backbone.localstorage': '../../bower_components/backbone.localStorage/backbone.localStorage'
+    'backbone.deepmodel': '../../bower_components/backbone-deep-model/distribution/deep-model'
     jade: '../../bower_components/jade/runtime'
     gridster: '../../bower_components/gridster/dist/jquery.gridster'
     bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap'
