@@ -29,10 +29,15 @@
       value = $(e.target).data('menuValue')
       switch category
         when 'layout' then @_changeLayout value
+        when 'theme' then @_changeTheme value
         when 'addwindow' then @_addWindow value
 
     _changeLayout: (newLayout) ->
-      @editor.layoutManager.applyLayout(newLayout)
+      @editor.layoutManager.applyLayout newLayout
+
+    _changeTheme: (newTheme) ->
+      requireJS ['app'], (App) ->
+        App.layout.setTheme newTheme
 
     _addWindow: (windowType) ->
       requireJS ['editor/widget_factory'], (WidgetFactory) =>

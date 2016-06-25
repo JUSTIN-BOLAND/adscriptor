@@ -56,6 +56,7 @@
       # Add Widget-Specific Classes to allow custom styling for widgets
       @$el.addClass("widget-#{@model.get('type')}")
       @ui.content.addClass("content-#{@model.get('type')}")
+      # Create Contained View by this Widget
       @content.show WidgetFactory.create @model.get('type'),
         model: @model
         editor: @editor
