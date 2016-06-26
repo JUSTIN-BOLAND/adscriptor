@@ -19,4 +19,18 @@
       }
     }
   }
+  .widget-log-view {
+    .content-log-view {
+      .item {
+        white-space: nowrap;
+        font-size: 14px;
+      }
+      .severity {
+        margin-left: 3px;
+      }
+      .message {
+        margin-left: 6px;
+      }
+    }
+  }
 }

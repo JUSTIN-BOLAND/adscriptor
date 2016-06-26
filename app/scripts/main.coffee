@@ -95,7 +95,10 @@ window.requireJS = require.config
 requireJS [
   'jquery'
   'app'
+  'logger'
   'bootstrap'
-], (jQuery, App) ->
+], (jQuery, App, Logger) ->
   # Start our Application when the DOM is ready
-  $ -> App.start()
+  $ ->
+    Logger.log('Initializing, please wait...', {foo: "bar", arr: [1,2,3]})
+    App.start()

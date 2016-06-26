@@ -1,12 +1,15 @@
 ﻿define [
   './views/menu_bar'
+  './views/log_view'
 ], (
   MenuBar
+  LogView
 ) ->
   class WidgetFactory
     @_getClassForType: (type) ->
       switch type
         when undefined, 'menubar' then MenuBar
+        when 'log-view' then LogView
         else throw new Error("Unknown Widget Type: #{widgetType}")
 
     @_defaultAttributes:
