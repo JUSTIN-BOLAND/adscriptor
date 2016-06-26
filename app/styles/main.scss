@@ -44,6 +44,8 @@ html, body {
       border-style: solid;
       padding: 3px;
     }
+    .widget-wrapper:hover .gs-resize-handle { opacity: 0.5; }
+    .widget-wrapper .gs-resize-handle:hover { opacity: 1; }
     .header {
       border-bottom-width: 1px;
       border-bottom-style: solid;
