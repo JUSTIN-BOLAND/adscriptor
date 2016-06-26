@@ -1,8 +1,10 @@
 ﻿define [
   'backbone.marionette'
+  'logger'
   './templates/menu_bar'
 ], (
   Marionette
+  Logger
   template
 ) ->
   class MenuBar extends Marionette.ItemView
@@ -32,11 +34,12 @@
         when 'layout' then @_changeLayout value
         when 'theme' then @_changeTheme value
         when 'addwindow' then @_addWindow value
+        else Logger.raiseError "Unknown Menu Action \"#{category}\" with parameter \"#{value}\"."
 
     onFocus: (e) ->
       widget = @$el.closest('.widget-menubar')
       widget.siblings('.widget-menubar').css('z-index', '')
-      widget.css('z-index', 15)
+      widget.css('z-index', 8)
 
     _changeLayout: (newLayout) ->
       @editor.layoutManager.applyLayout newLayout

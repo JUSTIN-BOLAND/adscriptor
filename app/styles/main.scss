@@ -29,6 +29,7 @@ html, body {
   .editor-grid {
     width: 100%;
     height: 100%;
+    .player-revert { z-index: 5 !important; }
     .grid-layout.active { background-image: url('./svg/grid.svg'); }
     .grid-layout {
       min-width: 100%;

@@ -1,7 +1,9 @@
 ﻿define [
+  'logger'
   './views/menu_bar'
   './views/log_view'
 ], (
+  Logger
   MenuBar
   LogView
 ) ->
@@ -10,7 +12,7 @@
       switch type
         when undefined, 'menubar' then MenuBar
         when 'log-view' then LogView
-        else throw new Error("Unknown Widget Type: #{widgetType}")
+        else Logger.raiseError "Unknown Widget Type: #{widgetType}"
 
     @_defaultAttributes:
       # Default Attribute Values for all Widgets

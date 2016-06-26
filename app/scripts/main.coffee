@@ -100,5 +100,5 @@ requireJS [
 ], (jQuery, App, Logger) ->
   # Start our Application when the DOM is ready
   $ ->
-    Logger.log('Initializing, please wait...', {foo: "bar", arr: [1,2,3]})
+    Logger.log('Initializing, please wait...')
     App.start()

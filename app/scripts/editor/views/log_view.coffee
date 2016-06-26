@@ -13,9 +13,9 @@
       # Default Widget Attributes for a MenuBar
       name: 'Log'
       height: 4
-      width: 6
-      minWidth: 3
-      minHeight: 3
+      width: 12
+      minWidth: 8
+      minHeight: 2
     childView: LogViewItem
     className: 'wrapper'
 
