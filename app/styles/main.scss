@@ -95,10 +95,15 @@ html, body {
         .offset { margin-left: 1px; }
       }
     }
+    .content-box {
+      padding: 6px;
+      height: calc(100% - 22px);
+    }
     .content {
       width: 100%;
-      height: calc(100% - 22px);
+      height: 100%;
       overflow: auto;
+      position: relative;
     }
   }
 }

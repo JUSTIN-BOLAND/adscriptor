@@ -52,10 +52,8 @@ body.theme-solarized {
             .stripe { border-bottom-color: rgba(170, 170, 170, 0.3); }
             .minimize-btn-container:hover .minimize-btn, .close-btn:hover { color: $text-highlight-color; }
           }
+          .content-box { background-color: rgba(0, 0, 0, 0.1); }
         }
-      }
-      .content-menubar {
-
       }
     }
   }

@@ -22,6 +22,7 @@
 
     events: ->
       'click .menu-action': 'onMenuAction'
+      'focus .btn.dropdown-toggle': 'onFocus'
 
     onMenuAction: (e) ->
       e.preventDefault()
@@ -31,6 +32,11 @@
         when 'layout' then @_changeLayout value
         when 'theme' then @_changeTheme value
         when 'addwindow' then @_addWindow value
+
+    onFocus: (e) ->
+      widget = @$el.closest('.widget-menubar')
+      widget.siblings('.widget-menubar').css('z-index', '')
+      widget.css('z-index', 15)
 
     _changeLayout: (newLayout) ->
       @editor.layoutManager.applyLayout newLayout
