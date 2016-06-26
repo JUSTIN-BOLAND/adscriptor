@@ -27,6 +27,10 @@
       }
       .severity {
         margin-left: 3px;
+        .severity-trace, .severity-debug { color: #87009c; }
+        .severity-info { color: #1F98C7; }
+        .severity-warn { color: #cec405; }
+        .severity-error { color: #d00404; }
       }
       .message {
         margin-left: 6px;

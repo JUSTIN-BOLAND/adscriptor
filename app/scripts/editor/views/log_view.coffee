@@ -19,6 +19,25 @@
     childView: LogViewItem
     className: 'wrapper'
 
+    collectionEvents:
+      'add': 'onCollectionChange'
+
     initialize: (options) ->
       @collection = Logger.getCollection()
       super
+      @delegateEvents()
+
+    remove: ->
+      @undelegateEvents()
+      super
+
+    _scrollDown: ->
+      console.log 'scrollDown', @$el.prop('scrollHeight')
+      @$el.parent().stop(true, false).animate scrollTop: (@$el.parent().prop('scrollHeight'))
+
+     render: ->
+      super
+      @_scrollDown()
+
+    onCollectionChange: ->
+      @_scrollDown()
