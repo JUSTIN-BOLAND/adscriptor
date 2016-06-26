@@ -1,9 +1,11 @@
 ﻿define [
   'backbone.marionette'
+  'perfect-scrollbar'
   '../widget_factory'
   './templates/widget_item'
 ], (
   Marionette
+  Scrollbar
   WidgetFactory
   template
 ) ->
@@ -34,6 +36,10 @@
     events: ->
       'click @ui.minimizeBtnContainer': -> @toggleWidget()
       'click .close-btn': 'hideWidget'
+    childEvents: ->
+      'render': 'onChildRender'
+      'add:child': 'onChildRender'
+      'remove:child': 'onChildRender'
 
     onGridChange: (widget) ->
       if @model.get 'collapsed'
@@ -50,6 +56,7 @@
           @toggleWidget false
         else
           @model.save widget
+      @ui.content.perfectScrollbar('update')
 
     onRender: ->
       @$el.data('view', this)
@@ -60,6 +67,11 @@
       @content.show WidgetFactory.create @model.get('type'),
         model: @model
         editor: @editor
+      # Add Scrollbar to Content
+      @ui.content.perfectScrollbar()
+
+    onChildRender: ->
+      @ui.content.perfectScrollbar('update')
 
     toggleWidget: (resize = true) ->
       if @model.get 'collapsed'

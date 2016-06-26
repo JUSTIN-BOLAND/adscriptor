@@ -71,6 +71,8 @@ window.requireJS = require.config
       deps: ['jquery']
     gridster:
       deps: ['jquery']
+    'perfect-scrollbar':
+      deps: ['jquery']
 
   paths:
     jquery: '../../bower_components/jquery/dist/jquery'
@@ -87,6 +89,7 @@ window.requireJS = require.config
     jade: '../../bower_components/jade/runtime'
     gridster: '../../bower_components/gridster/dist/jquery.gridster'
     bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap'
+    'perfect-scrollbar': '../../bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery'
 
 # load our app
 requireJS [

@@ -31,13 +31,30 @@ body.theme-solarized {
     .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus { background: $highlight-background-color; color: $text-highlight-color; }
     .dropdown-submenu > a:after { border-left-color: $text-color; }
     .dropdown-submenu:hover > a:after, .dropdown-submenu:focus > a:after { border-left-color: $text-highlight-color; }
-    li.divider {
-      background-color: $separator-color;
+    li.divider { background-color: $separator-color; }
+
+    .ps-container {
+      .ps-scrollbar-x { background-color: $highlight-foreground-color; }
+      .ps-scrollbar-y { background-color: $highlight-foreground-color; }
+      .ps-scrollbar-x-rail:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+        .ps-scrollbar-x { background-color: $highlight-foreground-color; }
+      }
+      .ps-scrollbar-y-rail:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+        .ps-scrollbar-y { background-color: $highlight-foreground-color; }
+      }
+    }
+    .ps-container.ps-in-scrolling.ps-x {
+      .ps-scrollbar-x-rail { background-color: rgba(0, 0, 0, 0.3); }
+      .ps-scrollbar-x { background-color: $highlight-foreground-color; }
+    }
+    .ps-container.ps-in-scrolling.ps-y {
+      .ps-scrollbar-y-rail { background-color: rgba(0, 0, 0, 0.3); }
+      .ps-scrollbar-y { background-color: $highlight-foreground-color; }
     }
 
-    .overlay {
-      background-color: rgba(0,0,0,0.3);
-    }
+    .overlay { background-color: rgba(0,0,0,0.3); }
 
     .layout {
       .editor-grid {
