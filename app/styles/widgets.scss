@@ -3,10 +3,8 @@
 
 .editor-grid {
   .widget-menubar {
-    z-index: 3;
     .content-menubar {
-      overflow: visible;
-      height: calc(100% - 19px);
+      overflow: visible !important;
       .wrapper {
         @include flex;
         @include flex-direction(row);
@@ -18,6 +16,24 @@
         .menu-entry {
           padding: 0 9px;
         }
+      }
+    }
+  }
+  .widget-log-view {
+    .content-log-view {
+      .item {
+        white-space: nowrap;
+        font-size: 14px;
+      }
+      .severity {
+        margin-left: 3px;
+        .severity-trace, .severity-debug { color: #87009c; }
+        .severity-info { color: #1F98C7; }
+        .severity-warn { color: #cec405; }
+        .severity-error { color: #d00404; }
+      }
+      .message {
+        margin-left: 6px;
       }
     }
   }

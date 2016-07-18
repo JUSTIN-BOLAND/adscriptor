@@ -1,8 +1,10 @@
 ﻿define [
   'backbone.marionette'
+  'logger'
   './widget_factory'
 ], (
   Marionette
+  Logger
   WidgetFactory
 ) ->
   class LayoutManager extends Marionette.Object
@@ -15,7 +17,7 @@
       switch layoutName
         when 'default' then @_defaultLayout()
         when 'other' then @_defaultLayout()
-        else throw new Error("Can't apply Layout \"#{layoutName}\", unknown layout name.")
+        else Logger.raiseError "Can't apply Layout \"#{layoutName}\", unknown layout name."
 
     _setLayout: (newLayout) ->
       @editor.destroyAllWidgets()

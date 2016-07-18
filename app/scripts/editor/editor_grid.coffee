@@ -68,13 +68,9 @@
           enabled: true
           handle: '.drag-handle'
           start: => @ui.grid.addClass('active')
-          stop: _.compose =>
+          stop: =>
             @ui.grid.removeClass('active')
             @gridster.serialize()
-          , ->
-            # reset the player-revert after transition, so our menu isn't hidden behind the old player...
-            player = @$player
-            player.one 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', -> player.removeClass('player-revert')
         resize:
           enabled: true
           start: => @ui.grid.addClass('active')

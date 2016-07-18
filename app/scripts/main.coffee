@@ -65,9 +65,13 @@ window.requireJS = require.config
       deps: ['backbone']
     'backbone.localstorage':
       deps: ['backbone']
+    'backbone.deepmodel':
+      deps: ['backbone']
     bootstrap:
       deps: ['jquery']
     gridster:
+      deps: ['jquery']
+    'perfect-scrollbar':
       deps: ['jquery']
 
   paths:
@@ -81,15 +85,20 @@ window.requireJS = require.config
     'backbone.wreqr': '../../bower_components/backbone.wreqr/lib/backbone.wreqr'
     'backbone.marionette': '../../bower_components/backbone.marionette/lib/backbone.marionette'
     'backbone.localstorage': '../../bower_components/backbone.localStorage/backbone.localStorage'
+    'backbone.deepmodel': '../../bower_components/backbone-deep-model/distribution/deep-model'
     jade: '../../bower_components/jade/runtime'
     gridster: '../../bower_components/gridster/dist/jquery.gridster'
     bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap'
+    'perfect-scrollbar': '../../bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery'
 
 # load our app
 requireJS [
   'jquery'
   'app'
+  'logger'
   'bootstrap'
-], (jQuery, App) ->
+], (jQuery, App, Logger) ->
   # Start our Application when the DOM is ready
-  $ -> App.start()
+  $ ->
+    Logger.log('Initializing, please wait...')
+    App.start()
