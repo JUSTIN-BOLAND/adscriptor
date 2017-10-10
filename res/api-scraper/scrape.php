@@ -4,7 +4,7 @@
   ini_set('display_errors', 1);
   ini_set('display_startup_errors', 1);
   error_reporting(E_ALL);
-  
+
   // Parses a Google Auto-completion File and returns its contents as JSON.
   function parseGoogleFile($filename)
   {
@@ -18,13 +18,13 @@
     }
     return $json;
   }
-  
+
   // Load Resource List
   file_exists('./api-responses/resources.json') or die('Please provide the resources.json File in /api-responses/');
   $resources_json = parseGoogleFile('./api-responses/resources.json') or die("resources.json couldn't be parsed!");
   $num_files = count($resources_json) or die('resources.json doesn\'t contain any Library Definitions, stopping...');
   print("Parsing $num_files API files (" . implode(', ', array_keys($resources_json)) . ")\n");
-  
+
   $files = array();
   $file_blacklist = array( 'JSON', 'Math', '[]', 'Object' );
   $files_parsed = 0; $files_skipped = 0; $files_blacklisted = 0;
@@ -50,10 +50,10 @@
     $files_parsed++;
   }
   print("Parsing Results: $num_files Files: $files_parsed parsed, $files_skipped skipped, $files_blacklisted blacklisted.\n");
-  
+
   /*
     Google Auto-Complete File Layout:
-    
+
     [
       unknown,
       public-type-definition,
@@ -62,14 +62,14 @@
       unknown,
       unknown
     ]
-  
+
     type-definition = [
       unknown,
       name,
       member-definitions,
       function-definitions
     ]
-    
+
     member-definition = [
       unknown,
       name,
@@ -79,7 +79,7 @@
       unknown,
       doc_comment
     ]
-    
+
     function-definition = [
       unknown,
       name,
@@ -90,7 +90,7 @@
       doc_comment,
       return_comment
     ]
-    
+
     argument-array-type = [
       unknown,
       name,
@@ -98,43 +98,46 @@
       doc_comment
     ]
   */
-  
+
   // Rename Rules for processName()
   $rename_table = array(
-    'M3FP42KoRcF-9_xxV3CJQtbK_KCzEej_I_bucket8' => 'AdWordsApp',
-    'Analytics_v3.Analytics.V3.Https___www_googleapis_com_' => 'Analytics',
+    'M3FP42KoRcF-9_xxV3CJQtbK_KCzEej_I_bucket11' => 'AdWordsApp',
+    'Analytics_v3.Analytics.V3' => 'Analytics',
     'Analytics_v3' => 'Analytics',
-    'Analytics.V3.Https___www_googleapis_com_' => 'Analytics',
-    'Bigquery_v2.Bigquery.V2.Https___www_googleapis_com_' => 'Bigquery',
+    'Analytics.V3' => 'Analytics',
+    'Bigquery_v2.Bigquery.V2' => 'Bigquery',
     'Bigquery_v2' => 'Bigquery',
-    'Bigquery.V2.Https___www_googleapis_com_' => 'Bigquery',
-    'Calendar_v3.Calendar.V3.Https___www_googleapis_com_' => 'Calendar',
+    'Bigquery.V2' => 'Bigquery',
+    'Calendar_v3.Calendar.V3' => 'Calendar',
     'Calendar_v3' => 'Calendar',
-    'Calendar.V3.Https___www_googleapis_com_' => 'Calendar',
-    'Fusiontables_v1.Fusiontables.V1.Https___www_googleapis_com_' => 'Fusiontables',
+    'Calendar.V3' => 'Calendar',
+    'Fusiontables_v1.Fusiontables.V1' => 'Fusiontables',
     'Fusiontables_v1' => 'Fusiontables',
-    'Fusiontables.V1.Https___www_googleapis_com_' => 'Fusiontables',
-    'MAUKQdvqkJRGmALD85K5127K_KCzEej_I_bucket8' => 'MccApp',
-    'Prediction_v1_6.Prediction.V1_6.Https___www_googleapis_com_' => 'Prediction',
+    'Fusiontables.V1' => 'Fusiontables',
+    'MAUKQdvqkJRGmALD85K5127K_KCzEej_I_bucket11' => 'MccApp',
+    'Prediction_v1_6.Prediction.V1_6' => 'Prediction',
     'Prediction_v1_6' => 'Prediction',
-    'Prediction.V1_6.Https___www_googleapis_com_' => 'Prediction',
-    'Content_v2.Content.V2.Https___www_googleapis_com_' => 'ShoppingContent',
+    'Prediction.V1_6' => 'Prediction',
+    'Content_v2.Content.V2' => 'ShoppingContent',
     'Content_v2' => 'ShoppingContent',
-    'Content.V2.Https___www_googleapis_com_' => 'ShoppingContent',
-    'Tasks_v1.Tasks.V1.Https___www_googleapis_com_' => 'Tasks',
+    'Content.V2' => 'ShoppingContent',
+    'Slides_v1' => 'Slides',
+    'Slides_v1.Slides.V1' => 'Slides',
+    'Slides.V1' => 'Slides',
+    'Tasks_v1.Tasks.V1' => 'Tasks',
     'Tasks_v1' => 'Tasks',
-    'Tasks.V1.Https___www_googleapis_com_' => 'Tasks',
-    'Youtube_v3.Youtube.V3.Https___www_googleapis_com_' => 'Youtube',
+    'Tasks.V1' => 'Tasks',
+    'Youtube_v3.Youtube.V3' => 'Youtube',
     'Youtube_v3' => 'Youtube',
-    'Youtube.V3.Https___www_googleapis_com_' => 'Youtube',
-    'YoutubeAnalytics_v1.YoutubeAnalytics.V1.Https___www_googleapis_com_' => 'YoutubeAnalytics',
+    'Youtube.V3' => 'Youtube',
+    'YoutubeAnalytics_v1.YoutubeAnalytics.V1' => 'YoutubeAnalytics',
     'YoutubeAnalytics_v1' => 'YoutubeAnalytics',
-    'YoutubeAnalytics.V1.Https___www_googleapis_com_' => 'YoutubeAnalytics'
+    'YoutubeAnalytics.V1' => 'YoutubeAnalytics'
   );
-  
+
   // List of already warned possible simple types
   $maybe_simple_types = array();
-  
+
   // Blacklist for Object Names (This Objects will get dropped)
   $blacklist_objects = array(
     'AdWordsApp.String',
@@ -142,7 +145,7 @@
     'MccApp.String',
     'MccApp.Array'
   );
-  
+
   // Processes an Object / Class / Function Name and renames it according to the renaming-rules
   // defined aboce.
   function processName($name)
@@ -152,13 +155,13 @@
     {
       $name = str_replace($value, $replacement, $name);
     }
-    
+
     // Remove '-', because tern doesn't like them in function-definitions
     $name = str_replace('-', '', $name);
-    
-    return $name;  
+
+    return $name;
   }
-  
+
   // Processes a Type (Function Parameter or Return Value)
   function processType($type)
   {
@@ -166,7 +169,7 @@
     // Transform Arrays
     if(substr($type, -2) === '[]')
       return '[' . processType(substr($type, 0, -2)) . ']';
-    
+
     // Simple Types
     if(strcasecmp($type, 'byte') == 0 ||
        strcasecmp($type, 'int')  == 0 ||
@@ -202,12 +205,12 @@
             strcasecmp($type, 'null') == 0)
     {
       return false;
-    }   
+    }
     else
     {
       // Resolve Complex Types
       $type = processName($type);
-      
+
       // Check if the Type has a dot (otherwise it is maybe a non-matched simple-type)
       if(strpos($type, '.') === false)
       {
@@ -215,14 +218,14 @@
         {
           $maybe_simple_types[$type] = true;
           print("Warning: Type '$type' could be a simple Type...\n");
-        }  
+        }
       }
-      
+
       // return the complex type
       return $type;
     }
   }
-  
+
   // Pad Spaces to the End of the Member Name until it is unique in this Object (kinda hacky)
   function processMemberName(&$def_object, $name)
   {
@@ -230,7 +233,7 @@
       $name .= ' ';
     return $name;
   }
-  
+
   // Appends the Member to the definition object
   function appendMember(&$def_object, $member)
   {
@@ -240,25 +243,25 @@
     {
       $member_name = $member[1];
       $member_type = $member[2];
-      
+
       // Modify Name & Type
       $member_name = processMemberName($def_object, processName($member_name));
       $member_type = processType($member_type) or 'object';
-      
+
       // Create the Member Definition
       $member_def = array( '!type' => $member_type);
-      
+
       // Check if a Comment is available
       if(array_key_exists(6, $member) && is_string($member[6]))
       {
         $member_def['!doc'] = strip_tags($member[6]);
       }
-      
+
       // Append the Member to the Parent
       $def_object[$member_name] = $member_def;
     }
   }
-  
+
   // Appends the Member Function to the definition object
   function appendMemberFunction(&$def_object, $member_fn)
   {
@@ -267,7 +270,7 @@
        array_key_exists(2, $member_fn))
     {
       $member_name = $member_fn[1];
-      
+
       // Assemble the Function Signature
       $member_sig = 'fn(';
       // Append Parameters
@@ -282,60 +285,60 @@
           {
             $argument_name = processName($argument[1]);
             $argument_type = processType($argument[2]) or 'object';
-            
+
             $argument_list[] = "$argument_name: $argument_type";
-          } 
+          }
         }
-        
+
         // Add Function Arguments to Function Signature
         $member_sig .= implode(', ', $argument_list);
       }
       $member_sig .= ')';
-      
+
       // Check if Return Type is valid
       $return_type = $member_fn[2];
       if(!is_null($return_type) && ($return_type = processType($return_type)) !== false)
       {
         $member_sig .= " -> $return_type";
       }
-      
+
       // Fix the Function Name
       $member_name = processMemberName($def_object, processName($member_name));
-      
+
       // Create the Member Definition
       $member_def = array( '!type' => $member_sig );
-      
+
       // Check if a Comment is available
       if(array_key_exists(6, $member_fn) && is_string($member_fn[6]))
       {
         $member_def['!doc'] = strip_tags($member_fn[6]);
       }
-      
+
       // Append the Member to the Parent
       $def_object[$member_name] = $member_def;
-       
+
     }
   }
-  
+
   // Appends an Api-Object to a Type-Definition
   function appendObject(&$def_object, $obj)
   {
     global $blacklist_objects;
-    
+
     // Check if Object Name is available
     if(array_key_exists(1, $obj) && is_string($obj[1]))
     {
       $obj_name = processMemberName($def_object, processName($obj[1]));
-      
+
       // Drop blacklisted Objects
       if(in_array(strtolower($obj_name), array_map('strtolower', $blacklist_objects)))
       {
         return;
       }
-      
+
       // Create the Obeject Signature (Members, Functions)
       $obj_sig = array();
-      
+
       // Append Members
       if(array_key_exists(2, $obj) && is_array($obj[2]))
       {
@@ -356,27 +359,27 @@
             appendMemberFunction($obj_sig, $member_fn_def);
         }
       }
-      
+
       // Add the Object to the definition
       $def_object[$obj_name] = $obj_sig;
-    } 
-    
-               
+    }
+
+
   }
-  
-  
-  
+
+
+
   // Convert the Files into the Tern layout
   $definition = array( '!name' => 'AdWordsAPI', '!define' => array() );
-  
+
   // Loop over all APIs
   foreach($files as $filename => $data)
   {
     print("Processing File $filename...\n");
-    
+
     $public_defs = array();
     $private_defs = array();
-    
+
     // Check if the API has a Public Type Definition
     if(array_key_exists(1, $data) && is_array($data[1]))
     {
@@ -386,7 +389,7 @@
       else
         $public_defs[] = $data[1];
     }
-    
+
     /*
       [
       unknown,
@@ -397,7 +400,7 @@
       unknown
     ]
     */
-    
+
     // Add the private Types
     if(array_key_exists(2, $data) && is_array($data[2]))
     {
@@ -406,25 +409,25 @@
       {
         if(is_array($private_type))
           $private_defs[] = $private_type;
-      }  
+      }
     }
-    
+
     // Append the Public Types directly to the definition
     foreach($public_defs as $public_object)
     {
-      appendObject($definition, $public_object);  
+      appendObject($definition, $public_object);
     }
     // Append the Private Types under the !define Section
     foreach($private_defs as $private_object)
     {
-      appendObject($definition['!define'], $private_object);  
+      appendObject($definition['!define'], $private_object);
     }
-    
+
     $public_count = count($public_defs);
     $private_count = count($private_defs);
     print("Processed $public_count public, $private_count private objects for API $filename...\n");
   }
-  
+
   // Sorts an Array and it's subarrays based on the keys
   function recursiveSort(&$arr)
   {
@@ -436,27 +439,27 @@
     }
     unset($value);
   }
-  
+
   recursiveSort($definition);
-  
-  
-  
+
+
+
   print("Finished processing, generating API Definition File for tern...\n");
-  
+
   $json_data = json_encode($definition, JSON_PRETTY_PRINT);
   $json_data_compressed = json_encode($definition);
-  
+
   $date = date('y-m-d H-i-s');
   $output_filename = "output/$date AdWordsApi.json";
-  
+
   // Write JSON File
   file_put_contents($output_filename, $json_data);
-  
+
   // Write Javascript Wrapper File
   $output_filename = substr($output_filename, 0, -4) . 'js';
   $javascript_wrapper = 'var AdWordsApi = JSON.parse("' . addslashes($json_data_compressed) . '");';
   file_put_contents($output_filename, $javascript_wrapper);
-  
-  
+
+
   print("Finished!\n");
 ?>
