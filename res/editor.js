@@ -91,7 +91,7 @@ function AceEditor() {
 
         //setup server options
         var server = editor.ternServer;
-        server.options.defs = [adwords_apidef, 'ecma5'];
+        server.options.defs = ['ecma5', adwords_apidef];
         server.options.plugins = { doc_comment: { fullDocs: true } };
         server.options.useWorker = true;
         server.options.switchToDoc = function (name, start, end, doNotCloseTips) {
@@ -229,7 +229,7 @@ function AceEditor() {
         $("pre#editor").css("display", "block");
     };
 
-    /* returns all document contents 
+    /* returns all document contents
         returns [] of { name: "foobar.js", content: "function foo(){ }"}
     */
     this.getDocs = function () {
