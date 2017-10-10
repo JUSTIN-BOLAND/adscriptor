@@ -184,9 +184,14 @@
       return 'number';
     }
     else if(strcasecmp($type, 'string') == 0 ||
+            strcasecmp($type, 'char') == 0 ||
             strcasecmp(substr($type, -7), '.string') == 0) // AdWordsApp and MccApp both have a custom string type... (AdWordsApp.String, MccApp.String)
     {
       return 'string';
+    }
+    else if(strcasecmp($type, 'date') == 0)
+    {
+      return '+Date';
     }
     else if(strcasecmp(substr($type, -6), '.array') == 0) // Same for arrays...
     {
@@ -210,6 +215,39 @@
     {
       // Resolve Complex Types
       $type = processName($type);
+      // thanks google, you messed up namespaces...
+      if (strcasecmp($type, 'callout') == 0 ||
+          strcasecmp($type, 'mobileapp') == 0 ||
+          strcasecmp($type, 'review') == 0 ||
+          strcasecmp($type, 'sitelink') == 0 ||
+          strcasecmp($type, 'snippet') == 0 ||
+          strcasecmp($type, 'extensionschedule') == 0 ||
+          strcasecmp($type, 'message') == 0 ||
+          strcasecmp($type, 'phonenumber') == 0 ||
+          strcasecmp($type, 'biddingstrategy') == 0 ||
+          strcasecmp($type, 'userlist') == 0 ||
+          strcasecmp($type, 'media') == 0 ||
+          strcasecmp($type, 'excludedplacementlist') == 0 ||
+          strcasecmp($type, 'targetedlocation') == 0 ||
+          strcasecmp($type, 'negativekeywordlist') == 0 ||
+          strcasecmp($type, 'excludedlocation') == 0 ||
+          strcasecmp($type, 'language') == 0 ||
+          strcasecmp($type, 'excludedcontentlabel') == 0)
+      {
+        $type = 'AdWordsApp.' . $type;
+      }
+      else if(strcasecmp($type, 'file') == 0)
+      {
+        $type = 'DriveApp.' . $type;
+      }
+      else if(strcasecmp($type, 'sheet') == 0)
+      {
+        $type = 'SpreadsheetApp.' . $type;
+      }
+      else if(strcasecmp($type, 'managedaccount') == 0)
+      {
+        $type = 'MccApp.' . $type;
+      }
 
       // Check if the Type has a dot (otherwise it is maybe a non-matched simple-type)
       if(strpos($type, '.') === false)
