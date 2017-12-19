@@ -1,0 +1,8 @@
+# Ignore the API Responses Directory
+# (contains code from google, don't want to cause any legal trouble)
+api-responses/*
+!api-responses/.gitkeep
+
+# Ignore the output directory
+output/*
+!output/.gitkeep
