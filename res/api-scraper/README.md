@@ -23,7 +23,9 @@ We (crealytics) normally do this periodically, and commit the latest autocomplet
     3. Copy the content of the lower textarea and save it as `api-responses/API_NAME.json`<br />
        (The file name would be `api-responses/DataTable.json` in this example)
     4. Repeat Step 1.-3. for all entries in the `resources.json` file.
+
     After that you should have the following files in the `api-responses` folder:<br />
+    ![api-responses folder contents](docs/images/api_responses.png)
 9.  Because some google api docs are randomly obfuscated, you need to fix the replacements in `conv-completion.php`
     to match the API names in the `api-responses/*.json` files. This is especially important for the `AdWordsApp.json` and the `MccApp.json`.<br />
     This is the replacement list:<br />
