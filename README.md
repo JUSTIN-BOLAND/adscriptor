@@ -9,3 +9,8 @@ Then open the index.html with your Browser.
 This Editor allows you to keep your Google Adwords Scripts on Github as Gists.
 Simply open the Editor, create a new Gist and copy the Embedding Code into your
 Google Adwords Script.
+
+
+#### Refreshing the API Documenation
+If you want to refresh the Google Api Documentations for the Autocompletion of AdScriptor,
+please take a look at the [Api Scraper](res/api-scraper/README.md) file.
