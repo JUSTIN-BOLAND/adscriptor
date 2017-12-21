@@ -1,0 +1,11 @@
+sudo: required
+install: true
+services:
+- docker
+
+script:
+- docker login -u $DOCKER_USER -p $DOCKER_PASS
+- export REPO=crealytics/adscriptor
+- docker build -t $REPO:latest .
+- docker tag $REPO:latest $REPO:travis-$TRAVIS_BUILD_NUMBER-$TRAVIS_COMMIT
+- docker push $REPO
