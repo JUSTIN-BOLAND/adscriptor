@@ -1,7 +1,7 @@
 # AdScriptor
 A HTML-based editor to edit Google Adwords Scripts and save them as gists on Github.
 
-A preview is available at http://turtlefight.de/github/adscriptor/
+A preview is available at https://adscriptor.camato.eu/
 
 Simply download this repository as zip and extract it into your webroot.
 Then open the index.html with your Browser.
