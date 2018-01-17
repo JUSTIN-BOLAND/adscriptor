@@ -337,27 +337,61 @@ function GetUserData(token, callback) {
            });
 }
 
-/* Loads the Gist List for the User */
-function LoadGistList(url, token, callback) {
-    $.ajax({
+
+function LoadCompleteGistList(url, token, data, deferred) {
+    var promise = (deferred || $.Deferred());
+
+    var fetch = $.ajax({
         url: url,
         type: 'GET',
-        data: { access_token: token },
+        data: { access_token: token, since: "1970-01-01T00:00:00Z" },
         dataType: 'jsonp',
         cache: false
-    }
-           ).success(function (gistdata) {
-               if (gistdata.meta.status != 200) {
-                   Store.removeItem("token.crypt");
-                   LogErrorOverlay("Failed to authenticate with Token.", "The Token you provided seems to be either invalid, mistyped, incomplete or misses one of the needed scopes. Please reload this page and enter a valid token.", JSON.stringify(gistdata, null, 2));
-               }
-               else {
-                   callback(gistdata.data);
-               }
-           }).error(function (e) {
-               Store.removeItem("token.crypt");
-               LogErrorOverlay("Failed to authenticate with Token.", "The Token you provided seems to be either invalid, mistyped, incomplete or misses one of the needed scopes. Please reload this page and enter a valid token.", JSON.stringify(e, null, 2));
-           });
+    });
+
+    fetch.success(function(gistdata){
+        if(gistdata.meta.status != 200) {
+            promise.reject(gistdata);
+        } else {
+            var result = (data || []).concat(gistdata.data);
+
+            var hasNext = false;
+            if(gistdata.meta.Link) {
+                for(var i = 0; i < gistdata.meta.Link.length; i++) {
+                    var link = gistdata.meta.Link[i];
+                    if(link[1].rel == "next") {
+                        hasNext = true;
+                        LoadCompleteGistList(link[0], token, result, promise);
+                        break;
+                    }
+                }
+            }
+
+            if(!hasNext) {
+                promise.resolve(result);
+            }
+        }
+    });
+
+    fetch.error(function(e){
+        promise.reject(e);
+    });
+
+
+    return promise.promise();
+}
+
+/* Loads the Gist List for the User */
+function LoadGistList(url, token, callback) {
+    var promise = LoadCompleteGistList(url, token, null, null);
+    promise.done(function (data) {
+        callback(data);
+    });
+
+    promise.fail(function (e){
+        Store.removeItem("token.crypt");
+        LogErrorOverlay("Failed to authenticate with Token.", "The Token you provided seems to be either invalid, mistyped, incomplete or misses one of the needed scopes. Please reload this page and enter a valid token.", JSON.stringify(e, null, 2));
+    });
 }
 
 /* Retrieves the File Content of a Gist File */
