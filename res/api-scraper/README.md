@@ -24,7 +24,8 @@ We (crealytics) normally do this periodically, and commit the latest autocomplet
 9.  Wait until the site is loaded and the "Download Autocompletion Definitions" button appears.  
     ![Wait for Definitions](docs/images/wait_for_definitions.png)
 10. Download the definitions by clicking on the button.
-11. Copy the json file you downloaded to `res/AdWordsApi.json` in the repository root.
-12. Done! You successfully updated the Autocompletion for AdScriptor!<br />
+11. Go back to the "Sources" tab in Developer Tools and remove the breakpoint from `tern.js` you set in step 5.
+12. Copy the json file you downloaded in step 10 to `res/AdWordsApi.json` in the repository root.
+13. Done! You successfully updated the Autocompletion for AdScriptor!<br />
     Now you just need to verify that there are no errors in the file by trying out the autocompletion in your browser.
 
