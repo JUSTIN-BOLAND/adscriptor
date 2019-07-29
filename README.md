@@ -13,4 +13,4 @@ Google Adwords Script.
 
 #### Refreshing the API Documenation
 If you want to refresh the Google Api Documentations for the Autocompletion of AdScriptor,
-please take a look at the [Api Scraper](res/api-scraper/README.md) file.
+please take a look at the [Api Scraper](api-scraper/README.md) file.
