@@ -23,7 +23,7 @@ $(function () {
     // Create horizontal and vertical Split Panes
     $("div#subcontent").splitPane();
     $("div#topcontent").splitPane();
-    
+
     // initialize all main menu entries
     initMainMenu();
 });

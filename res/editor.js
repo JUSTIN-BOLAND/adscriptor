@@ -91,7 +91,7 @@ function AceEditor() {
 
         //setup server options
         var server = editor.ternServer;
-        server.options.defs = ['ecma5', adwords_apidef];
+        server.options.defs = ['ecma5'].concat(adwords_apidef.definitions);
         server.options.plugins = { doc_comment: { fullDocs: true } };
         server.options.useWorker = true;
         server.options.switchToDoc = function (name, start, end, doNotCloseTips) {
